@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
   CheckCircle, 
+  TrendingUp,
   Shield, 
   Clock, 
   BarChart3, 
@@ -277,139 +278,309 @@ function HeroSection() {
 }
 
 function FeaturesSection() {
+  const [activeFeature, setActiveFeature] = useState<string | null>(null);
+  
   const features = [
     {
-      id: "insights",
-      title: "Unlock Insights with Our Dashboard",
-      description: "Transform your past performance into clear, actionable insights, and sharpen your trading strategy with an intuitive dashboard built for traders who want an edge.",
-      cta: "Start learning",
-      image: "/api/placeholder/400/300",
-      background: "bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900",
-      accent: "text-blue-600 dark:text-blue-400"
+      id: "signals",
+      title: "Premium Trading Signals",
+      description: "Advanced algorithmic analysis delivers precise entry and exit points with industry-leading accuracy.",
+      metric: "87%",
+      metricLabel: "Win Rate",
+      icon: TrendingUp,
+      gradient: "from-emerald-500/20 to-primary/20"
     },
     {
-      id: "support", 
-      title: "Enjoy Instant Support",
-      description: "With an average response time of just 33 seconds, our customer-obsessed support team is here to assist you every step of the way, offering solutions to any problem, big or small, through live chat and email.",
-      cta: "Chat 24/7",
-      stat: "87%",
-      statLabel: "of conversations rated as or even better",
-      background: "bg-gradient-to-br from-blue-900 to-blue-800",
-      accent: "text-green-400",
-      darkCard: true
+      id: "analytics", 
+      title: "Market Intelligence",
+      description: "Real-time market analysis powered by machine learning algorithms and professional insights.",
+      metric: "0.3s",
+      metricLabel: "Analysis Speed",
+      icon: BarChart3,
+      gradient: "from-blue-500/20 to-primary/20"
     },
     {
-      id: "news",
-      title: "Trade News", 
-      description: "Trade during most economic events on a regular account. For major events, choose swing trading.",
-      cta: "Read trading rules",
-      background: "bg-gradient-to-br from-blue-600 to-purple-600",
-      accent: "text-white",
-      darkCard: true
+      id: "risk",
+      title: "Risk Management",
+      description: "Sophisticated position sizing and risk assessment tools that protect and grow your capital.",
+      metric: "2.1:1",
+      metricLabel: "Risk/Reward",
+      icon: Shield,
+      gradient: "from-orange-500/20 to-primary/20"
+    },
+    {
+      id: "support",
+      title: "Expert Support",
+      description: "Direct access to professional traders with 24/7 support and personalized guidance.",
+      metric: "< 2min",
+      metricLabel: "Response Time", 
+      icon: MessageCircle,
+      gradient: "from-purple-500/20 to-primary/20"
     }
   ];
 
   return (
-    <section id="features" className="py-20 lg:py-32">
-      <div className="container-responsive">
+    <section id="features" className="py-20 lg:py-32 relative overflow-hidden">
+      {/* Elegant background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -left-40 w-80 h-80 bg-primary/8 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="container-responsive relative">
         {/* Section Header */}
         <AnimatedSection className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6"
+          >
+            <div className="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse" />
+            <span className="text-sm font-medium text-primary">Professional Trading Platform</span>
+          </motion.div>
+          
+          <h2 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
             Why Professionals Choose{" "}
-            <span className="text-primary">Spleux</span>
+            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              Spleux
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Professional trading tools designed for serious traders who demand exceptional results.
+          
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Advanced trading infrastructure designed for serious traders who demand
+            exceptional performance and reliability.
           </p>
         </AnimatedSection>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {features.map((feature, index) => (
-            <AnimatedSection
-              key={feature.id}
-              delay={index * 0.1}
-              className={`${feature.id === 'insights' ? 'lg:col-span-2' : ''}`}
-            >
-              <motion.div
-                className={`relative p-8 rounded-2xl overflow-hidden h-full ${feature.background} ${
-                  feature.darkCard ? 'text-white' : 'text-foreground'
-                }`}
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Content */}
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex-1">
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">
-                      {feature.title}
-                    </h3>
-                    <p className={`text-lg leading-relaxed mb-6 ${
-                      feature.darkCard ? 'text-gray-200' : 'text-muted-foreground'
-                    }`}>
-                      {feature.description}
-                    </p>
-                  </div>
-
-                  {/* Stats for support card */}
-                  {feature.stat && (
-                    <div className="mb-6">
-                      <div className="flex items-center space-x-4">
-                        <div className="text-right">
-                          <div className="text-4xl font-bold text-green-400">{feature.stat}</div>
-                          <div className="text-sm text-gray-300">{feature.statLabel}</div>
-                        </div>
-                        <div className="w-12 h-20 bg-green-400 rounded-full flex items-center justify-center">
-                          <div className="text-2xl">😊</div>
-                        </div>
+        {/* Modern Feature Display */}
+        <div className="max-w-7xl mx-auto">
+          {/* Feature Navigation */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon;
+              const isActive = activeFeature === feature.id;
+              
+              return (
+                <AnimatedSection key={feature.id} delay={index * 0.1}>
+                  <motion.button
+                    onClick={() => setActiveFeature(isActive ? null : feature.id)}
+                    className={cn(
+                      "group relative flex items-center space-x-3 px-6 py-4 rounded-2xl transition-all duration-500",
+                      "bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30",
+                      isActive && "bg-primary/10 border-primary/30 shadow-lg shadow-primary/10"
+                    )}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className={cn(
+                      "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                      "bg-primary/10 group-hover:bg-primary/20",
+                      isActive && "bg-primary/20"
+                    )}>
+                      <IconComponent className={cn(
+                        "w-5 h-5 transition-colors duration-300",
+                        isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary"
+                      )} />
+                    </div>
+                    
+                    <div className="text-left">
+                      <div className={cn(
+                        "font-semibold text-sm transition-colors duration-300",
+                        isActive ? "text-primary" : "text-foreground"
+                      )}>
+                        {feature.title}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {feature.metricLabel}: {feature.metric}
                       </div>
                     </div>
-                  )}
-
-                  {/* CTA Button */}
-                  <div>
-                    <motion.button
-                      className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                        feature.darkCard 
-                          ? 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
-                          : 'bg-primary text-primary-foreground hover:bg-primary/90'
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {feature.cta}
-                    </motion.button>
-                  </div>
-                </div>
-
-                {/* Dashboard preview for insights card */}
-                {feature.id === 'insights' && (
-                  <div className="absolute bottom-4 right-4 opacity-20 dark:opacity-10">
-                    <div className="w-64 h-40 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-                      <div className="space-y-2">
-                        <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded w-3/4"></div>
-                        <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded w-1/2"></div>
-                        <div className="h-16 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded mt-4"></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Wave pattern for news card */}
-                {feature.id === 'news' && (
-                  <div className="absolute bottom-0 right-0 opacity-20">
-                    <svg width="200" height="100" viewBox="0 0 200 100" className="text-white">
-                      <path
-                        d="M0,50 Q50,20 100,50 T200,50 L200,100 L0,100 Z"
-                        fill="currentColor"
+                    
+                    {/* Active indicator */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeFeature"
+                        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
-                    </svg>
-                  </div>
-                )}
+                    )}
+                  </motion.button>
+                </AnimatedSection>
+              );
+            })}
+          </div>
+
+          {/* Feature Content Display */}
+          <AnimatePresence mode="wait">
+            {activeFeature && (
+              <motion.div
+                key={activeFeature}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                className="mb-12"
+              >
+                {(() => {
+                  const feature = features.find(f => f.id === activeFeature);
+                  if (!feature) return null;
+                  
+                  const IconComponent = feature.icon;
+                  
+                  return (
+                    <div className="relative">
+                      <div className={cn(
+                        "relative p-8 md:p-12 rounded-3xl backdrop-blur-xl border border-border/50",
+                        "bg-gradient-to-br", feature.gradient
+                      )}>
+                        {/* Content */}
+                        <div className="grid md:grid-cols-2 gap-8 items-center">
+                          {/* Text Content */}
+                          <div className="space-y-6">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center">
+                                <IconComponent className="w-8 h-8 text-primary" />
+                              </div>
+                              <div>
+                                <h3 className="text-3xl font-bold text-foreground">{feature.title}</h3>
+                                <div className="flex items-center space-x-2 mt-1">
+                                  <span className="text-2xl font-bold text-primary">{feature.metric}</span>
+                                  <span className="text-sm text-muted-foreground">{feature.metricLabel}</span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <p className="text-lg text-muted-foreground leading-relaxed">
+                              {feature.description}
+                            </p>
+                            
+                            <div className="flex items-center space-x-4">
+                              <motion.button
+                                className="btn-primary px-6 py-3 rounded-xl text-sm font-semibold"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                              >
+                                Learn More
+                              </motion.button>
+                              <button className="flex items-center space-x-2 text-primary hover:text-primary/80 transition-colors">
+                                <Play className="w-4 h-4" />
+                                <span className="text-sm font-medium">Watch Demo</span>
+                              </button>
+                            </div>
+                          </div>
+                          
+                          {/* Visual Element */}
+                          <div className="relative">
+                            <div className="aspect-square rounded-2xl bg-card/30 backdrop-blur-sm border border-border/30 p-8 flex items-center justify-center">
+                              <motion.div
+                                animate={{ 
+                                  rotate: [0, 5, -5, 0],
+                                  scale: [1, 1.05, 1]
+                                }}
+                                transition={{ 
+                                  duration: 4,
+                                  repeat: Infinity,
+                                  ease: "easeInOut"
+                                }}
+                                className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-2xl shadow-primary/25"
+                              >
+                                <IconComponent className="w-16 h-16 text-primary-foreground" />
+                              </motion.div>
+                            </div>
+                            
+                            {/* Floating elements */}
+                            <motion.div
+                              animate={{ y: [0, -10, 0], opacity: [0.5, 1, 0.5] }}
+                              transition={{ duration: 3, repeat: Infinity }}
+                              className="absolute -top-4 -right-4 w-6 h-6 rounded-full bg-primary/40 blur-sm"
+                            />
+                            <motion.div
+                              animate={{ y: [0, 10, 0], opacity: [0.3, 0.8, 0.3] }}
+                              transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                              className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full bg-primary/30 blur-sm"
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Decorative elements */}
+                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-primary/5 to-transparent opacity-50" />
+                      </div>
+                    </div>
+                  );
+                })()}
               </motion.div>
-            </AnimatedSection>
-          ))}
+            )}
+          </AnimatePresence>
+
+          {/* Default state when no feature is selected */}
+          {!activeFeature && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-20"
+            >
+              <div className="max-w-2xl mx-auto">
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.05, 1],
+                    rotate: [0, 1, -1, 0]
+                  }}
+                  transition={{ 
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-2xl shadow-primary/25"
+                >
+                  <Target className="w-12 h-12 text-primary-foreground" />
+                </motion.div>
+                
+                <h3 className="text-2xl font-bold mb-4">Explore Our Features</h3>
+                <p className="text-muted-foreground mb-6">
+                  Click on any feature above to discover how Spleux can transform your trading experience.
+                </p>
+                
+                <div className="flex flex-wrap justify-center gap-2 text-sm text-muted-foreground">
+                  <span className="px-3 py-1 bg-primary/10 rounded-full">87% Win Rate</span>
+                  <span className="px-3 py-1 bg-primary/10 rounded-full">1000+ Traders</span>
+                  <span className="px-3 py-1 bg-primary/10 rounded-full">24/7 Support</span>
+                  <span className="px-3 py-1 bg-primary/10 rounded-full">Real-time Analysis</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </div>
+
+        {/* Bottom CTA */}
+        <AnimatedSection className="mt-20 text-center" delay={0.6}>
+          <div className="max-w-4xl mx-auto p-8 rounded-3xl bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 backdrop-blur-sm">
+            <h3 className="text-2xl font-bold mb-4">
+              Ready to Transform Your Trading?
+            </h3>
+            <p className="text-muted-foreground mb-6 text-lg">
+              Join thousands of professional traders who trust Spleux for consistent results.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <motion.button
+                className="btn-primary px-8 py-4 rounded-full text-lg font-semibold"
+                whileHover={{ scale: 1.02, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Start Free Trial
+              </motion.button>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <div className="flex -space-x-2">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-xs font-medium">
+                      {i}
+                    </div>
+                  ))}
+                </div>
+                <span>Join 1000+ active traders</span>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );
