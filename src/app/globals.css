@@ -89,7 +89,7 @@
   --color-spleux-green: rgb(126 247 71);
   --color-spleux-green-dark: rgb(100 200 50);
   --gradient-mesh: linear-gradient(135deg, rgb(var(--gradient-start)) 0%, rgb(var(--gradient-end)) 100%);
-}
+  }
 
 * {
   border-color: rgb(var(--border));

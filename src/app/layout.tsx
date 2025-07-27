@@ -50,8 +50,8 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem={true}
           disableTransitionOnChange={false}
-        >
-          {children}
+      >
+        {children}
         </ThemeProvider>
       </body>
     </html>

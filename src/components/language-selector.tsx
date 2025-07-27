@@ -3,18 +3,19 @@
 import { ChevronDown, Globe, Check } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Flag from 'react-world-flags';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
-  { code: 'es', name: 'Español', flag: '🇪🇸', nativeName: 'Español' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷', nativeName: 'Français' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪', nativeName: 'Deutsch' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹', nativeName: 'Italiano' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹', nativeName: 'Português' },
-  { code: 'ru', name: 'Русский', flag: '🇷🇺', nativeName: 'Русский' },
-  { code: 'zh', name: '中文', flag: '🇨🇳', nativeName: '中文' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵', nativeName: '日本語' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦', nativeName: 'العربية' },
+  { code: 'en', name: 'English', flagCode: 'US', nativeName: 'English' },
+  { code: 'es', name: 'Español', flagCode: 'ES', nativeName: 'Español' },
+  { code: 'fr', name: 'Français', flagCode: 'FR', nativeName: 'Français' },
+  { code: 'de', name: 'Deutsch', flagCode: 'DE', nativeName: 'Deutsch' },
+  { code: 'it', name: 'Italiano', flagCode: 'IT', nativeName: 'Italiano' },
+  { code: 'pt', name: 'Português', flagCode: 'PT', nativeName: 'Português' },
+  { code: 'ru', name: 'Русский', flagCode: 'RU', nativeName: 'Русский' },
+  { code: 'zh', name: '中文', flagCode: 'CN', nativeName: '中文' },
+  { code: 'ja', name: '日本語', flagCode: 'JP', nativeName: '日本語' },
+  { code: 'ar', name: 'العربية', flagCode: 'SA', nativeName: 'العربية' },
 ];
 
 export function LanguageSelector() {
@@ -46,15 +47,18 @@ export function LanguageSelector() {
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.02 }}
       >
-        <div className="flex items-center space-x-2">
-          <div className="relative">
-            <span className="text-lg filter drop-shadow-sm">{selectedLang.flag}</span>
-            <div className="absolute inset-0 bg-primary/20 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-          <span className="text-sm font-medium text-foreground/90 hidden sm:block">
-            {selectedLang.code.toUpperCase()}
-          </span>
-        </div>
+                        <div className="flex items-center space-x-2">
+                  <div className="relative">
+                    <Flag 
+                      code={selectedLang.flagCode} 
+                      className="w-5 h-4 rounded-sm object-cover filter drop-shadow-sm" 
+                    />
+                    <div className="absolute inset-0 bg-primary/20 rounded-sm blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground/90 hidden sm:block">
+                    {selectedLang.code.toUpperCase()}
+                  </span>
+                </div>
         
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -115,19 +119,22 @@ export function LanguageSelector() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <div className="flex items-center space-x-3">
-                          <div className="relative">
-                            <span className="text-xl filter drop-shadow-sm">{language.flag}</span>
-                            {selectedLang.code === language.code && (
-                              <motion.div
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full flex items-center justify-center"
-                              >
-                                <Check className="w-2 h-2 text-primary-foreground" />
-                              </motion.div>
-                            )}
-                          </div>
+                                                        <div className="flex items-center space-x-3">
+                                  <div className="relative">
+                                    <Flag 
+                                      code={language.flagCode} 
+                                      className="w-6 h-4 rounded-sm object-cover filter drop-shadow-sm" 
+                                    />
+                                    {selectedLang.code === language.code && (
+                                      <motion.div
+                                        initial={{ scale: 0, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full flex items-center justify-center"
+                                      >
+                                        <Check className="w-2 h-2 text-primary-foreground" />
+                                      </motion.div>
+                                    )}
+                                  </div>
                           
                           <div className="text-left">
                             <div className="font-medium text-sm">{language.nativeName}</div>
