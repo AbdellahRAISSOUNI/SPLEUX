@@ -187,8 +187,18 @@ function Navigation() {
 function HeroSection() {
   return (
     <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 relative overflow-hidden">
-      <div className="absolute inset-0 gradient-mesh opacity-30" />
-      <div className="absolute inset-0 dot-pattern opacity-20" />
+      {/* Sophisticated gradient background */}
+      <div className="absolute inset-0">
+        {/* Multi-layer gradient system */}
+        <div className="absolute inset-0 hero-gradient-system" />
+        
+        {/* Diagonal accent elements */}
+        <div className="absolute top-0 right-0 w-1/2 h-3/4 diagonal-accent-1" />
+        <div className="absolute bottom-0 left-0 w-2/3 h-1/2 diagonal-accent-2" />
+        
+        {/* Animated mesh overlay */}
+        <div className="absolute inset-0 hero-mesh" />
+      </div>
       
       <div className="container-responsive relative">
         <div className="max-w-4xl mx-auto text-center">
@@ -269,199 +279,137 @@ function HeroSection() {
 function FeaturesSection() {
   const features = [
     {
-      id: "telegram",
-      title: "Premium Telegram Access",
-      description: "Exclusive access to our private telegram channel with real-time signals and market analysis.",
-      highlight: "Real-time signals",
-      metric: "95% accuracy",
-      visual: "💬",
-      gradient: "from-blue-500 to-cyan-500"
+      id: "insights",
+      title: "Unlock Insights with Our Dashboard",
+      description: "Transform your past performance into clear, actionable insights, and sharpen your trading strategy with an intuitive dashboard built for traders who want an edge.",
+      cta: "Start learning",
+      image: "/api/placeholder/400/300",
+      background: "bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900",
+      accent: "text-blue-600 dark:text-blue-400"
     },
     {
-      id: "analytics",
-      title: "AI-Powered Analytics",
-      description: "Comprehensive market analysis with machine learning insights and trend predictions.",
-      highlight: "AI predictions",
-      metric: "0.3s response",
-      visual: "🧠",
-      gradient: "from-purple-500 to-pink-500"
+      id: "support", 
+      title: "Enjoy Instant Support",
+      description: "With an average response time of just 33 seconds, our customer-obsessed support team is here to assist you every step of the way, offering solutions to any problem, big or small, through live chat and email.",
+      cta: "Chat 24/7",
+      stat: "87%",
+      statLabel: "of conversations rated as or even better",
+      background: "bg-gradient-to-br from-blue-900 to-blue-800",
+      accent: "text-green-400",
+      darkCard: true
     },
     {
-      id: "risk",
-      title: "Risk Management",
-      description: "Professional risk assessment and position sizing recommendations for every trade.",
-      highlight: "Smart sizing",
-      metric: "2.1:1 R/R",
-      visual: "🛡️",
-      gradient: "from-emerald-500 to-teal-500"
-    },
-    {
-      id: "precision",
-      title: "Precision Entries",
-      description: "Exact entry points, stop losses, and take profit levels with optimal timing.",
-      highlight: "Perfect timing",
-      metric: "87% win rate",
-      visual: "🎯",
-      gradient: "from-orange-500 to-red-500"
-    },
-    {
-      id: "support",
-      title: "24/7 Expert Support",
-      description: "Round-the-clock support from our expert trading team and community.",
-      highlight: "Always available",
-      metric: "< 2min response",
-      visual: "⚡",
-      gradient: "from-yellow-500 to-orange-500"
-    },
-    {
-      id: "tracking",
-      title: "Performance Analytics",
-      description: "Detailed analytics to track your trading performance and optimize your strategy.",
-      highlight: "Data insights",
-      metric: "$2.1M+ tracked",
-      visual: "📊",
-      gradient: "from-violet-500 to-purple-500"
+      id: "news",
+      title: "Trade News", 
+      description: "Trade during most economic events on a regular account. For major events, choose swing trading.",
+      cta: "Read trading rules",
+      background: "bg-gradient-to-br from-blue-600 to-purple-600",
+      accent: "text-white",
+      darkCard: true
     }
   ];
 
   return (
-    <section id="features" className="py-20 lg:py-32 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
-      
-      <div className="container-responsive relative">
+    <section id="features" className="py-20 lg:py-32">
+      <div className="container-responsive">
         {/* Section Header */}
-        <AnimatedSection className="text-center mb-20" variant="scaleIn">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 backdrop-blur-sm border border-primary/30 mb-8"
-          >
-            <span className="text-primary font-semibold">✨ Premium Features</span>
-          </motion.div>
-          
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-8 leading-tight">
-            Why Professionals
-            <br />
-            Choose{" "}
-            <span className="bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent relative">
-              Spleux
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full"
-              />
-            </span>
+        <AnimatedSection className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+            Why Professionals Choose{" "}
+            <span className="text-primary">Spleux</span>
           </h2>
-          
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Revolutionary trading infrastructure designed for professionals who demand
-            <span className="text-primary font-semibold"> exceptional results</span>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Professional trading tools designed for serious traders who demand exceptional results.
           </p>
         </AnimatedSection>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {features.map((feature, index) => (
             <AnimatedSection
               key={feature.id}
               delay={index * 0.1}
-              variant="fadeUp"
-              className="group"
+              className={`${feature.id === 'insights' ? 'lg:col-span-2' : ''}`}
             >
               <motion.div
-                className="relative h-full p-8 rounded-3xl bg-card/30 backdrop-blur-xl border border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden"
-                whileHover={{ 
-                  y: -8,
-                  transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }
-                }}
+                className={`relative p-8 rounded-2xl overflow-hidden h-full ${feature.background} ${
+                  feature.darkCard ? 'text-white' : 'text-foreground'
+                }`}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* Background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                
-                {/* Floating visual element */}
-                <motion.div
-                  className="absolute top-6 right-6 text-4xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    rotate: [0, 5, 0]
-                  }}
-                  transition={{ 
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  {feature.visual}
-                </motion.div>
-                
                 {/* Content */}
-                <div className="relative z-10">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="space-y-2">
-                      <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                        {feature.highlight}
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="flex-1">
+                    <h3 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                      {feature.title}
+                    </h3>
+                    <p className={`text-lg leading-relaxed mb-6 ${
+                      feature.darkCard ? 'text-gray-200' : 'text-muted-foreground'
+                    }`}>
+                      {feature.description}
+                    </p>
+                  </div>
+
+                  {/* Stats for support card */}
+                  {feature.stat && (
+                    <div className="mb-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                          <div className="text-4xl font-bold text-green-400">{feature.stat}</div>
+                          <div className="text-sm text-gray-300">{feature.statLabel}</div>
+                        </div>
+                        <div className="w-12 h-20 bg-green-400 rounded-full flex items-center justify-center">
+                          <div className="text-2xl">😊</div>
+                        </div>
                       </div>
-                      <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
-                        {feature.title}
-                      </h3>
                     </div>
-                  </div>
-                  
-                  {/* Description */}
-                  <p className="text-muted-foreground leading-relaxed mb-6 text-lg">
-                    {feature.description}
-                  </p>
-                  
-                  {/* Metric */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                      <span className="text-sm font-medium text-primary">{feature.metric}</span>
-                    </div>
-                    
-                    {/* Arrow indicator */}
-                    <motion.div
-                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      whileHover={{ x: 4 }}
+                  )}
+
+                  {/* CTA Button */}
+                  <div>
+                    <motion.button
+                      className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
+                        feature.darkCard 
+                          ? 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
+                          : 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      }`}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
-                      <ArrowRight className="w-5 h-5 text-primary" />
-                    </motion.div>
+                      {feature.cta}
+                    </motion.button>
                   </div>
                 </div>
-                
-                {/* Hover effect border */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" 
-                     style={{ padding: '1px' }}>
-                  <div className="w-full h-full rounded-3xl bg-card/90 backdrop-blur-xl" />
-                </div>
+
+                {/* Dashboard preview for insights card */}
+                {feature.id === 'insights' && (
+                  <div className="absolute bottom-4 right-4 opacity-20 dark:opacity-10">
+                    <div className="w-64 h-40 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                      <div className="space-y-2">
+                        <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded w-3/4"></div>
+                        <div className="h-2 bg-gray-200 dark:bg-gray-600 rounded w-1/2"></div>
+                        <div className="h-16 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded mt-4"></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Wave pattern for news card */}
+                {feature.id === 'news' && (
+                  <div className="absolute bottom-0 right-0 opacity-20">
+                    <svg width="200" height="100" viewBox="0 0 200 100" className="text-white">
+                      <path
+                        d="M0,50 Q50,20 100,50 T200,50 L200,100 L0,100 Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                )}
               </motion.div>
             </AnimatedSection>
           ))}
         </div>
-
-        {/* Bottom CTA */}
-        <AnimatedSection variant="scaleIn" className="text-center">
-          <motion.div
-            className="inline-flex items-center space-x-4 px-8 py-4 rounded-2xl bg-gradient-to-r from-primary/10 to-secondary/10 backdrop-blur-sm border border-primary/20"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="text-foreground font-semibold">Ready to experience premium trading?</span>
-            <motion.button
-              className="btn-primary px-6 py-2 rounded-full text-sm font-semibold"
-              whileHover={{ scale: 1.05, x: 4 }}
-            >
-              Explore Features
-            </motion.button>
-          </motion.div>
-        </AnimatedSection>
       </div>
     </section>
   );
