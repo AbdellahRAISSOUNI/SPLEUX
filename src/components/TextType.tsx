@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, createElement } from "react";
-import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import "./TextType.css";
 
 interface TextTypeProps {
   text: string[];
@@ -22,7 +23,6 @@ interface TextTypeProps {
   onSentenceComplete?: (sentence: string, index: number) => void;
   startOnVisible?: boolean;
   reverseMode?: boolean;
-  [key: string]: any;
 }
 
 const TextType: React.FC<TextTypeProps> = ({
@@ -86,6 +86,19 @@ const TextType: React.FC<TextTypeProps> = ({
   }, [startOnVisible]);
 
   useEffect(() => {
+    if (showCursor && cursorRef.current) {
+      gsap.set(cursorRef.current, { opacity: 1 });
+      gsap.to(cursorRef.current, {
+        opacity: 0,
+        duration: cursorBlinkDuration,
+        repeat: -1,
+        yoyo: true,
+        ease: "power2.inOut",
+      });
+    }
+  }, [showCursor, cursorBlinkDuration]);
+
+  useEffect(() => {
     if (!isVisible) return;
 
     let timeout: NodeJS.Timeout;
@@ -140,6 +153,7 @@ const TextType: React.FC<TextTypeProps> = ({
     }
 
     return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentCharIndex,
     displayedText,
@@ -162,7 +176,7 @@ const TextType: React.FC<TextTypeProps> = ({
     (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
 
   return createElement(
-    Component as any,
+    Component,
     {
       ref: containerRef,
       className: `text-type ${className}`,
@@ -175,18 +189,12 @@ const TextType: React.FC<TextTypeProps> = ({
       {displayedText}
     </span>,
     showCursor && (
-      <motion.span
+      <span
         ref={cursorRef}
         className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? "text-type__cursor--hidden" : ""}`}
-        animate={{ opacity: [1, 0, 1] }}
-        transition={{
-          duration: cursorBlinkDuration,
-          repeat: Infinity,
-          ease: "linear"
-        }}
       >
         {cursorCharacter}
-      </motion.span>
+      </span>
     )
   );
 };

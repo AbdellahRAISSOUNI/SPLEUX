@@ -13,7 +13,6 @@ import {
   MessageCircle,
   Star,
   Play,
-  Award,
   Globe,
   Menu,
   X
@@ -21,7 +20,7 @@ import {
 import { useRef, useState } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSelector } from '@/components/language-selector';
-import TextType from '@/components/text-type';
+import TextType from '@/components/TextType';
 import { cn } from '@/lib/utils';
 
 const fadeInUp = {
@@ -227,7 +226,7 @@ function HeroSection() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left: Content */}
             <div className="space-y-8 text-left lg:pr-8">
-              {/* Main Headline with Typing Animation */}
+              {/* Main Headline with Typing Effect */}
               <div className="space-y-4">
                 <motion.div
                   initial={{ opacity: 0, x: -50 }}
@@ -238,28 +237,29 @@ function HeroSection() {
                   <TextType
                     text={[
                       "Elite Trading",
+                      "Premium Signals", 
                       "Smart Analytics",
-                      "Pro Signals",
-                      "Market Intelligence", 
-                      "Trading Mastery"
+                      "Pro Intelligence",
+                      "Advanced Trading"
                     ]}
+                    as="h1"
                     typingSpeed={100}
                     pauseDuration={2000}
                     deletingSpeed={50}
                     showCursor={true}
                     cursorCharacter="|"
                     cursorClassName="text-primary"
-                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
+                    className="inline-block"
                   />
                 </motion.div>
-                <motion.h1
+                <motion.h2
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.4 }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent"
                 >
                   Intelligence
-                </motion.h1>
+                </motion.h2>
               </div>
 
               {/* Premium Description */}
