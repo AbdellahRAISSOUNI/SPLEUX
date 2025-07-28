@@ -63,7 +63,7 @@ const TextType: React.FC<TextTypeProps> = ({
   };
 
   const getCurrentTextColor = () => {
-    if (textColors.length === 0) return "#ffffff";
+    if (textColors.length === 0) return "inherit";
     return textColors[currentTextIndex % textColors.length];
   };
 
@@ -184,7 +184,7 @@ const TextType: React.FC<TextTypeProps> = ({
     },
     <span
       className="text-type__content"
-      style={{ color: getCurrentTextColor() }}
+      style={textColors.length > 0 ? { color: getCurrentTextColor() } : {}}
     >
       {displayedText}
     </span>,

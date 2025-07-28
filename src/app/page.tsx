@@ -249,7 +249,7 @@ function HeroSection() {
                     showCursor={true}
                     cursorCharacter="|"
                     cursorClassName="text-primary"
-                    className="inline-block whitespace-nowrap"
+                    className="inline-block whitespace-nowrap text-black dark:text-white"
                   />
                 </motion.div>
                 <motion.h2
@@ -377,7 +377,7 @@ function HeroSection() {
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.5 }}
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
                 >
-                  <div className="bg-card/90 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl shadow-primary/10">
+                  <div className="bg-card/90 dark:bg-card/90 backdrop-blur-xl border border-border/50 dark:border-border/50 rounded-3xl p-8 shadow-2xl shadow-primary/10 dark:shadow-primary/10 bg-white/95 dark:bg-card/90">
                     <div className="text-center space-y-4">
                       <motion.div
                         animate={{ 
@@ -424,7 +424,7 @@ function HeroSection() {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
                   >
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
@@ -456,7 +456,7 @@ function HeroSection() {
                       ease: "easeInOut",
                       delay: 1
                     }}
-                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
                   >
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
@@ -488,7 +488,7 @@ function HeroSection() {
                       ease: "easeInOut",
                       delay: 2
                     }}
-                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
                   >
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
@@ -520,7 +520,7 @@ function HeroSection() {
                       ease: "easeInOut",
                       delay: 3
                     }}
-                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
                   >
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
@@ -575,7 +575,7 @@ function HeroSection() {
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
             className="pt-8 sm:pt-12"
           >
-            <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-2xl p-6 sm:p-8">
+            <div className="bg-white/95 dark:bg-card/30 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-6 sm:p-8 shadow-lg dark:shadow-lg">
               <div className="flex flex-col lg:flex-row items-center justify-center space-y-6 lg:space-y-0 lg:space-x-12 text-sm">
                 <div className="flex items-center space-x-3">
                   <div className="flex -space-x-2">
