@@ -25,31 +25,32 @@ import StarBorder from '@/components/StarBorder';
 import SpotlightCard from '@/components/SpotlightCard';
 import { cn } from '@/lib/utils';
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
-};
+// Animation variants - keeping for potential future use
+// const fadeInUp = {
+//   initial: { opacity: 0, y: 30 },
+//   animate: { opacity: 1, y: 0 },
+//   transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+// };
 
-const slideIn = {
-  initial: { opacity: 0, x: -30 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
-};
+// const slideIn = {
+//   initial: { opacity: 0, x: -30 },
+//   animate: { opacity: 1, x: 0 },
+//   transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+// };
 
-const scaleIn = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
-};
+// const scaleIn = {
+//   initial: { opacity: 0, scale: 0.8 },
+//   animate: { opacity: 1, scale: 1 },
+//   transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+// };
 
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+// const staggerContainer = {
+//   animate: {
+//     transition: {
+//       staggerChildren: 0.1
+//     }
+//   }
+// };
 
 function AnimatedSection({ 
   children, 
@@ -720,7 +721,7 @@ function FeaturesSection() {
               { label: "Members", value: "35K+" },
               { label: "Experience", value: "5+ Years" },
               { label: "Support", value: "24/7" }
-            ].map((stat, index) => (
+            ].map((stat) => (
               <div key={stat.label} className="flex items-center space-x-2">
                 <div 
                   className="w-2 h-2 rounded-full"
@@ -1086,7 +1087,7 @@ const TestimonialsColumn = (props: {
                     <Star key={i} className="w-3.5 h-3.5 fill-current transition-all duration-300" style={{ color: '#c1ff72' }} />
                   ))}
                 </motion.div>
-                <p className="text-foreground leading-relaxed text-sm">"{text}"</p>
+                <p className="text-foreground leading-relaxed text-sm">&ldquo;{text}&rdquo;</p>
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-border/30">
                 <div className="flex flex-col">

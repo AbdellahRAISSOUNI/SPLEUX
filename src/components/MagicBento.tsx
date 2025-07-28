@@ -555,7 +555,7 @@ const useMobileDetection = () => {
 };
 
 const MagicBento: React.FC<BentoProps> = ({
-  textAutoHide = true,
+  // textAutoHide = true, // Unused parameter
   enableStars = true,
   enableSpotlight = true,
   enableBorderGlow = true,
