@@ -104,7 +104,7 @@ function Navigation() {
             className="flex items-center space-x-2"
           >
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/60 rounded-lg flex items-center justify-center">
-              <span className="font-bold text-primary-foreground text-sm">S</span>
+              <TrendingUp className="w-4 h-4 text-white stroke-[1.5]" />
           </div>
             <span className="font-display font-bold text-xl">Spleux</span>
           </motion.div>
@@ -232,7 +232,7 @@ function HeroSection() {
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight whitespace-nowrap overflow-visible"
                 >
                   <TextType
                     text={[
@@ -249,7 +249,7 @@ function HeroSection() {
                     showCursor={true}
                     cursorCharacter="|"
                     cursorClassName="text-primary"
-                    className="inline-block"
+                    className="inline-block whitespace-nowrap"
                   />
                 </motion.div>
                 <motion.h2
@@ -391,7 +391,7 @@ function HeroSection() {
                         }}
                         className="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-primary/60 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/25"
                       >
-                        <TrendingUp className="w-8 h-8 text-primary-foreground" />
+                        <TrendingUp className="w-8 h-8 text-white stroke-[2.5]" />
                       </motion.div>
                       <div>
                         <motion.div 

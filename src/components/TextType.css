@@ -1,6 +1,7 @@
 .text-type {
   display: inline-block;
-  white-space: pre-wrap;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .text-type__cursor {
