@@ -399,7 +399,7 @@ function HeroSection() {
                           animate={{ opacity: [0.7, 1, 0.7] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         >
-                          87%
+                          97%
                         </motion.div>
                         <div className="text-sm text-muted-foreground">Win Rate</div>
                       </div>
@@ -634,7 +634,7 @@ function FeaturesSection() {
       id: "signals",
       title: "Premium Trading Signals",
       description: "Advanced algorithmic analysis delivers precise entry and exit points with industry-leading accuracy.",
-      metric: "87%",
+      metric: "97%",
       metricLabel: "Win Rate",
       icon: TrendingUp,
       gradient: "from-emerald-500/20 to-primary/20"
