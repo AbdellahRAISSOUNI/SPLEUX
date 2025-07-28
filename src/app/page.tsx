@@ -7,6 +7,7 @@ import {
   TrendingUp,
   Shield, 
   Clock, 
+  Users,
   BarChart3, 
   Target, 
   MessageCircle,
@@ -20,6 +21,7 @@ import {
 import { useRef, useState } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSelector } from '@/components/language-selector';
+import TextType from '@/components/text-type';
 import { cn } from '@/lib/utils';
 
 const fadeInUp = {
@@ -187,89 +189,436 @@ function Navigation() {
 
 function HeroSection() {
   return (
-    <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 relative overflow-hidden">
-      {/* Sophisticated gradient background */}
-      <div className="absolute inset-0">
-        {/* Multi-layer gradient system */}
-        <div className="absolute inset-0 hero-gradient-system" />
-        
-        {/* Diagonal accent elements */}
-        <div className="absolute top-0 right-0 w-1/2 h-3/4 diagonal-accent-1" />
-        <div className="absolute bottom-0 left-0 w-2/3 h-1/2 diagonal-accent-2" />
-        
-        {/* Animated mesh overlay */}
-        <div className="absolute inset-0 hero-mesh" />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-10">
+      {/* Sophisticated Background System */}
+      <div className="absolute inset-0 hero-gradient-system" />
+      <div className="absolute inset-0 hero-mesh" />
       
-      <div className="container-responsive relative">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Diagonal Accent Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 right-0 w-1/3 h-1/2 diagonal-accent-1" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/3 diagonal-accent-2" />
+      </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6"
-          >
-            Professional Trading
-            <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Signals & Analytics
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
-          >
-            Join 1000+ professional traders using our premium telegram signals service. 
-            Advanced analytics, risk management, and consistent 87% win rate.
-          </motion.p>
-
+      <div className="container-responsive relative z-10">
+        <div className="space-y-12 max-w-7xl mx-auto">
+          {/* Premium Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
+            className="text-center"
           >
-            <motion.button
-              className="btn-primary px-8 py-4 rounded-full text-lg font-semibold flex items-center space-x-2 group"
-              whileHover={{ scale: 1.02, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span>Start Trading Now</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
-            
-            <motion.button
-              className="flex items-center space-x-3 px-6 py-4 rounded-full border border-border hover:bg-accent transition-colors group"
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                <Play className="w-4 h-4 text-primary fill-current" />
+            <div className="inline-flex items-center">
+              <div className="relative">
+                <div className="px-6 py-3 bg-gradient-to-r from-primary/20 to-primary/10 backdrop-blur-sm border border-primary/30 rounded-full">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-sm font-semibold text-primary tracking-wide">PREMIUM TRADING SIGNALS</span>
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent rounded-full blur-xl" />
               </div>
-              <span className="font-medium">Watch Demo</span>
-            </motion.button>
+            </div>
           </motion.div>
 
-          {/* Social Proof */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-          >
-            {[
-              { number: "87%", label: "Win Rate" },
-              { number: "1000+", label: "Active Traders" },
-              { number: "$2.1M+", label: "Profits Generated" },
-              { number: "24/7", label: "Support" }
-            ].map((stat, index) => (
-              <div key={index} className="space-y-2">
-                <div className="text-2xl md:text-3xl font-bold text-primary">{stat.number}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+          {/* Revolutionary Main Content Layout */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Left: Content */}
+            <div className="space-y-8 text-left lg:pr-8">
+              {/* Main Headline with Typing Animation */}
+              <div className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
+                >
+                  <TextType
+                    text={[
+                      "Elite Trading",
+                      "Smart Analytics",
+                      "Pro Signals",
+                      "Market Intelligence", 
+                      "Trading Mastery"
+                    ]}
+                    typingSpeed={100}
+                    pauseDuration={2000}
+                    deletingSpeed={50}
+                    showCursor={true}
+                    cursorCharacter="|"
+                    cursorClassName="text-primary"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight"
+                  />
+                </motion.div>
+                <motion.h1
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.4 }}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent"
+                >
+                  Intelligence
+                </motion.h1>
               </div>
-            ))}
+
+              {/* Premium Description */}
+              <motion.p
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.6 }}
+                className="text-xl md:text-2xl text-muted-foreground leading-relaxed"
+              >
+                Advanced algorithmic signals with{" "}
+                <span className="text-primary font-semibold">87% accuracy</span>.
+                Join the exclusive network of professional traders generating consistent profits.
+              </motion.p>
+
+              {/* Action Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
+                className="flex flex-col sm:flex-row gap-4"
+              >
+                <motion.button
+                  className="group relative px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-2xl overflow-hidden cursor-pointer"
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  {/* Base Button Background */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary via-primary to-primary/90" />
+                  
+                  {/* Orbiting Light Animation */}
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute inset-0">
+                      {/* Orbiting Light Trail */}
+                      <div 
+                        className="absolute w-16 h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-full blur-sm"
+                        style={{
+                          top: '2px',
+                          left: '50%',
+                          transformOrigin: '50% 22px',
+                          animation: 'orbit 2s linear infinite',
+                        }}
+                      />
+                      {/* Secondary Light Trail (offset) */}
+                      <div 
+                        className="absolute w-12 h-0.5 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full blur-sm"
+                        style={{
+                          top: '2px',
+                          left: '50%',
+                          transformOrigin: '50% 22px',
+                          animation: 'orbit 2s linear infinite',
+                          animationDelay: '1s',
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Sophisticated Inner Glow */}
+                  <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Micro Interaction - Ripple Effect */}
+                  <div className="absolute inset-0 rounded-2xl">
+                    <div className="absolute inset-0 rounded-2xl bg-white/5 scale-0 group-hover:scale-100 transition-transform duration-700 ease-out" />
+                  </div>
+                  
+                  {/* Premium Text Animation */}
+                  <span className="relative z-20 flex items-center justify-center">
+                    <span className="transition-all duration-300 group-hover:text-shadow-sm">Start Trading Now</span>
+                    <ArrowRight className="ml-3 w-5 h-5 transition-all duration-300 group-hover:translate-x-0.5" />
+                  </span>
+                  
+                  {/* Elegant Drop Shadow */}
+                  <div className="absolute inset-0 rounded-2xl shadow-lg shadow-primary/20 group-hover:shadow-xl group-hover:shadow-primary/30 transition-shadow duration-300 -z-10" />
+                </motion.button>
+
+                <motion.button
+                  className="px-8 py-4 border border-border hover:border-primary/50 rounded-2xl font-medium text-foreground hover:text-primary transition-all duration-300 backdrop-blur-sm cursor-pointer"
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  View Live Signals
+                </motion.button>
+              </motion.div>
+
+              {/* Trust Indicators */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 1.0 }}
+                className="flex items-center space-x-6 text-sm text-muted-foreground"
+              >
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="w-4 h-4 text-primary" />
+                  <span>Verified Results</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Shield className="w-4 h-4 text-primary" />
+                  <span>Risk Managed</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Clock className="w-4 h-4 text-primary" />
+                  <span>24/7 Active</span>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right: Interactive Stats & Visuals */}
+            <div className="relative">
+              {/* Floating Stats Cards */}
+              <div className="relative h-80 sm:h-96 lg:h-[500px]">
+                {/* Main Stats Card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.5 }}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+                >
+                  <div className="bg-card/90 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl shadow-primary/10">
+                    <div className="text-center space-y-4">
+                      <motion.div
+                        animate={{ 
+                          scale: [1, 1.05, 1],
+                          rotate: [0, 1, -1, 0]
+                        }}
+                        transition={{ 
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-primary/60 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/25"
+                      >
+                        <TrendingUp className="w-8 h-8 text-primary-foreground" />
+                      </motion.div>
+                      <div>
+                        <motion.div 
+                          className="text-4xl font-bold text-primary"
+                          animate={{ opacity: [0.7, 1, 0.7] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          87%
+                        </motion.div>
+                        <div className="text-sm text-muted-foreground">Win Rate</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Floating Stat 1 */}
+                <motion.div
+                  initial={{ opacity: 0, x: -100, y: 0 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.7 }}
+                  className="absolute top-8 sm:top-12 left-0 sm:left-2"
+                >
+                  <motion.div
+                    animate={{ 
+                      y: [0, -10, 0],
+                      rotate: [0, 2, -2, 0]
+                    }}
+                    transition={{ 
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <Users className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-foreground">1000+</div>
+                        <div className="text-xs text-muted-foreground">Active Traders</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Floating Stat 2 */}
+                <motion.div
+                  initial={{ opacity: 0, x: 100, y: 0 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.9 }}
+                  className="absolute top-16 sm:top-24 right-0 sm:right-2"
+                >
+                  <motion.div
+                    animate={{ 
+                      y: [0, 10, 0],
+                      rotate: [0, -2, 2, 0]
+                    }}
+                    transition={{ 
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1
+                    }}
+                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <BarChart3 className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-foreground">$2.1M</div>
+                        <div className="text-xs text-muted-foreground">Generated</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Floating Stat 3 */}
+                <motion.div
+                  initial={{ opacity: 0, x: -80, y: 100 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 1.1 }}
+                  className="absolute bottom-12 sm:bottom-16 left-2 sm:left-8"
+                >
+                  <motion.div
+                    animate={{ 
+                      y: [0, -8, 0],
+                      scale: [1, 1.02, 1]
+                    }}
+                    transition={{ 
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 2
+                    }}
+                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <Clock className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-foreground">24/7</div>
+                        <div className="text-xs text-muted-foreground">Support</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Floating Stat 4 */}
+                <motion.div
+                  initial={{ opacity: 0, x: 80, y: 100 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 1.3 }}
+                  className="absolute bottom-4 sm:bottom-8 right-2 sm:right-12"
+                >
+                  <motion.div
+                    animate={{ 
+                      y: [0, 8, 0],
+                      rotate: [0, 1, -1, 0]
+                    }}
+                    transition={{ 
+                      duration: 7,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 3
+                    }}
+                    className="bg-card/80 backdrop-blur-sm border border-border/30 rounded-2xl p-4 shadow-lg"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <Target className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-foreground">2.1:1</div>
+                        <div className="text-xs text-muted-foreground">Risk/Reward</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Connection Lines Animation */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <svg className="w-full h-full opacity-20">
+                    <motion.path
+                      d="M100,50 Q200,100 300,150 T500,200"
+                      stroke="rgb(var(--primary))"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="5,5"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.3 }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <motion.path
+                      d="M400,80 Q300,150 200,220 T50,300"
+                      stroke="rgb(var(--primary))"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeDasharray="3,7"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 0.2 }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    />
+                  </svg>
+                </div>
+
+                {/* Ambient Glow Effects */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+                <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-primary/5 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-primary/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Trust Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
+            className="pt-8 sm:pt-12"
+          >
+            <div className="bg-card/30 backdrop-blur-sm border border-border/30 rounded-2xl p-6 sm:p-8">
+              <div className="flex flex-col lg:flex-row items-center justify-center space-y-6 lg:space-y-0 lg:space-x-12 text-sm">
+                <div className="flex items-center space-x-3">
+                  <div className="flex -space-x-2">
+                    {[1,2,3,4,5].map(i => (
+                      <motion.div 
+                        key={i} 
+                        className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-xs font-medium text-primary"
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                      >
+                        {i}
+                      </motion.div>
+                    ))}
+                  </div>
+                  <span className="font-medium text-foreground">Trusted by 1000+ Professional Traders</span>
+                </div>
+                
+                <div className="h-px w-16 bg-border lg:h-6 lg:w-px" />
+                
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-1">
+                    {[1,2,3,4,5].map(i => (
+                      <Star key={i} className="w-4 h-4 text-yellow-500 fill-current" />
+                    ))}
+                  </div>
+                  <span className="font-medium text-foreground">4.9/5 Average Rating</span>
+                </div>
+                
+                <div className="h-px w-16 bg-border lg:h-6 lg:w-px" />
+                
+                <div className="flex items-center space-x-3">
+                  <motion.div 
+                    className="w-3 h-3 rounded-full bg-green-500 shadow-lg shadow-green-500/50"
+                    animate={{ 
+                      opacity: [0.5, 1, 0.5],
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                  <span className="font-medium text-foreground">Live Trading Active</span>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -550,7 +899,7 @@ function FeaturesSection() {
             </motion.div>
           )}
         </div>
-
+        
         {/* Bottom CTA */}
         <AnimatedSection className="mt-20 text-center" delay={0.6}>
           <div className="max-w-4xl mx-auto p-8 rounded-3xl bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 backdrop-blur-sm">
@@ -577,7 +926,7 @@ function FeaturesSection() {
                   ))}
                 </div>
                 <span>Join 1000+ active traders</span>
-              </div>
+          </div>
             </div>
           </div>
         </AnimatedSection>
