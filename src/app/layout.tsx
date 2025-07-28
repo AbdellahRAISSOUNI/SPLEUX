@@ -17,18 +17,18 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   title: "Spleux Trading Services - Premium Trading Signals",
-  description: "Professional telegram signals service delivering consistent winning trades to serious traders. Join 1000+ active traders with 87% win rate.",
+  description: "Professional telegram signals service delivering consistent winning trades to serious traders. Join 35,000+ academy members with 5+ years of proven experience and 97% win rate.",
   keywords: "trading signals, telegram trading, forex signals, crypto signals, professional trading",
   authors: [{ name: "Spleux Trading Services" }],
   openGraph: {
     title: "Spleux Trading Services - Premium Trading Signals",
-    description: "Professional telegram signals service delivering consistent winning trades to serious traders.",
+    description: "Professional telegram signals service delivering consistent winning trades to serious traders. Join 35,000+ academy members with 5+ years of proven experience.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Spleux Trading Services - Premium Trading Signals",
-    description: "Professional telegram signals service delivering consistent winning trades to serious traders.",
+    description: "Professional telegram signals service delivering consistent winning trades to serious traders. Join 35,000+ academy members with 5+ years of proven experience.",
   },
 };
 
@@ -47,10 +47,10 @@ export default function RootLayout({
       <body className={`${inter.variable} ${bricolage.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem={true}
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange={false}
-      >
+        >
         {children}
         </ThemeProvider>
       </body>

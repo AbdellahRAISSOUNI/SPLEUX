@@ -23,6 +23,10 @@
   --ring: 126 247 71;
   --radius: 0.5rem;
   
+  /* Logo colors */
+  --logo-green: 193 255 114;
+  --logo-green-hex: #c1ff72;
+  
   /* Custom gradient variables */
   --gradient-start: 255 255 255;
   --gradient-end: 248 250 252;
@@ -52,6 +56,10 @@
   --input: 39 39 42;
   --ring: 126 247 71;
   
+  /* Logo colors */
+  --logo-green: 193 255 114;
+  --logo-green-hex: #c1ff72;
+  
   /* Custom gradient variables for dark */
   --gradient-start: 10 10 10;
   --gradient-end: 0 0 0;
@@ -80,6 +88,7 @@
   --color-border: rgb(var(--border));
   --color-input: rgb(var(--input));
   --color-ring: rgb(var(--ring));
+  --color-logo-green: rgb(var(--logo-green));
   
   /* Fonts */
   --font-sans: var(--font-inter);
@@ -438,5 +447,41 @@ html, body {
 @keyframes orbit {
   0% { transform: translateX(-50%) rotate(0deg); }
   100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* StarBorder Animations */
+@keyframes star-movement-bottom {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(-100%, 0%); opacity: 0; }
+}
+
+@keyframes star-movement-top {
+  0% { transform: translate(0%, 0%); opacity: 1; }
+  100% { transform: translate(100%, 0%); opacity: 0; }
+}
+
+/* Utility classes for StarBorder animations */
+.animate-star-movement-bottom {
+  animation: star-movement-bottom linear infinite alternate;
+}
+
+.animate-star-movement-top {
+  animation: star-movement-top linear infinite alternate;
+}
+
+/* Button Cursor Styles */
+button, .btn-primary, .cursor-pointer {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Logo Green Button Styles */
+.btn-logo-green {
+  background: var(--logo-green-hex);
+  color: #000;
+  cursor: pointer;
 }
 
