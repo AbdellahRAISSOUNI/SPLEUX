@@ -7,6 +7,7 @@ import {
   FeaturesSection,
   PricingSection,
   TestimonialsSection,
+  FAQSection,
   CTASection,
   Footer
 } from '@/sections';
@@ -19,6 +20,7 @@ export default function Home() {
       <FeaturesSection />
       <PricingSection />
       <TestimonialsSection />
+      <FAQSection />
       <CTASection />
       <Footer />
     </div>
