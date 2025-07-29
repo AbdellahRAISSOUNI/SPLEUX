@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 export interface BentoCardProps {
   color?: string;
@@ -26,7 +27,7 @@ export interface BentoProps {
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = "132, 0, 255";
+const DEFAULT_GLOW_COLOR = "193, 255, 114"; // #c1ff72 - SPLEUX brand color
 const MOBILE_BREAKPOINT = 768;
 
 const cardData: BentoCardProps[] = [
@@ -134,12 +135,33 @@ const ParticleCard: React.FC<{
   enableMagnetism = false,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const borderRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement[]>([]);
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
   const isHoveredRef = useRef(false);
   const memoizedParticles = useRef<HTMLDivElement[]>([]);
   const particlesInitialized = useRef(false);
   const magnetismAnimationRef = useRef<gsap.core.Tween | null>(null);
+
+  // Mouse tracking for border glow effect
+  const offsetX = useMotionValue(-100);
+  const offsetY = useMotionValue(-100);
+  const maskImage = useMotionTemplate`radial-gradient(100px 100px at ${offsetX}px ${offsetY}px, black, transparent)`;
+
+  // Mouse tracking effect
+  useEffect(() => {
+    const updateMousePosition = (e: MouseEvent) => {
+      if (!borderRef.current) return;
+      const borderRect = borderRef.current.getBoundingClientRect();
+      offsetX.set(e.x - borderRect.x);
+      offsetY.set(e.y - borderRect.y);
+    };
+
+    window.addEventListener("mousemove", updateMousePosition);
+    return () => {
+      window.removeEventListener("mousemove", updateMousePosition);
+    };
+  }, [offsetX, offsetY]);
 
   const initializeParticles = useCallback(() => {
     if (particlesInitialized.current || !cardRef.current) return;
@@ -370,6 +392,197 @@ const ParticleCard: React.FC<{
       className={`${className} relative overflow-hidden`}
       style={{ ...style, position: "relative", overflow: "hidden" }}
     >
+      {/* Mouse-following border glow effect */}
+      <motion.div
+        className="absolute inset-0 border-2 rounded-2xl pointer-events-none"
+        style={{
+          borderColor: `rgb(${glowColor})`,
+          WebkitMaskImage: maskImage,
+          maskImage,
+        }}
+        ref={borderRef}
+      />
+      {children}
+    </div>
+  );
+};
+
+const RegularCard: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  glowColor?: string;
+  enableTilt?: boolean;
+  clickEffect?: boolean;
+  enableMagnetism?: boolean;
+  shouldDisableAnimations?: boolean;
+}> = ({
+  children,
+  className = "",
+  style,
+  glowColor = DEFAULT_GLOW_COLOR,
+  enableTilt = false,
+  clickEffect = true,
+  enableMagnetism = true,
+  shouldDisableAnimations = false,
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const borderRef = useRef<HTMLDivElement>(null);
+
+  // Mouse tracking for border glow effect
+  const offsetX = useMotionValue(-100);
+  const offsetY = useMotionValue(-100);
+  const maskImage = useMotionTemplate`radial-gradient(100px 100px at ${offsetX}px ${offsetY}px, black, transparent)`;
+
+  // Mouse tracking effect
+  useEffect(() => {
+    const updateMousePosition = (e: MouseEvent) => {
+      if (!borderRef.current) return;
+      const borderRect = borderRef.current.getBoundingClientRect();
+      offsetX.set(e.x - borderRect.x);
+      offsetY.set(e.y - borderRect.y);
+    };
+
+    window.addEventListener("mousemove", updateMousePosition);
+    return () => {
+      window.removeEventListener("mousemove", updateMousePosition);
+    };
+  }, [offsetX, offsetY]);
+
+  useEffect(() => {
+    if (shouldDisableAnimations || !cardRef.current) return;
+
+    const el = cardRef.current;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (shouldDisableAnimations) return;
+
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      if (enableTilt) {
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        gsap.to(el, {
+          rotateX,
+          rotateY,
+          duration: 0.1,
+          ease: "power2.out",
+          transformPerspective: 1000,
+        });
+      }
+
+      if (enableMagnetism) {
+        const magnetX = (x - centerX) * 0.05;
+        const magnetY = (y - centerY) * 0.05;
+
+        gsap.to(el, {
+          x: magnetX,
+          y: magnetY,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    const handleMouseLeave = () => {
+      if (shouldDisableAnimations) return;
+
+      if (enableTilt) {
+        gsap.to(el, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
+
+      if (enableMagnetism) {
+        gsap.to(el, {
+          x: 0,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      if (!clickEffect || shouldDisableAnimations) return;
+
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const maxDistance = Math.max(
+        Math.hypot(x, y),
+        Math.hypot(x - rect.width, y),
+        Math.hypot(x, y - rect.height),
+        Math.hypot(x - rect.width, y - rect.height)
+      );
+
+      const ripple = document.createElement("div");
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${maxDistance * 2}px;
+        height: ${maxDistance * 2}px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
+        left: ${x - maxDistance}px;
+        top: ${y - maxDistance}px;
+        pointer-events: none;
+        z-index: 1000;
+      `;
+
+      el.appendChild(ripple);
+
+      gsap.fromTo(
+        ripple,
+        {
+          scale: 0,
+          opacity: 1,
+        },
+        {
+          scale: 1,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          onComplete: () => ripple.remove(),
+        }
+      );
+    };
+
+    el.addEventListener("mousemove", handleMouseMove);
+    el.addEventListener("mouseleave", handleMouseLeave);
+    el.addEventListener("click", handleClick);
+
+    return () => {
+      el.removeEventListener("mousemove", handleMouseMove);
+      el.removeEventListener("mouseleave", handleMouseLeave);
+      el.removeEventListener("click", handleClick);
+    };
+  }, [shouldDisableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor]);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`${className} relative overflow-hidden`}
+      style={{ ...style, position: "relative", overflow: "hidden" }}
+    >
+      {/* Mouse-following border glow effect */}
+      <motion.div
+        className="absolute inset-0 border-2 rounded-2xl pointer-events-none"
+        style={{
+          borderColor: `rgb(${glowColor})`,
+          WebkitMaskImage: maskImage,
+          maskImage,
+        }}
+        ref={borderRef}
+      />
       {children}
     </div>
   );
@@ -754,119 +967,15 @@ const MagicBento: React.FC<BentoProps> = ({
             }
 
             return (
-              <div
+              <RegularCard
                 key={index}
                 className={baseClassName}
                 style={cardStyle}
-                ref={(el) => {
-                  if (!el) return;
-
-                  const handleMouseMove = (e: MouseEvent) => {
-                    if (shouldDisableAnimations) return;
-
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-
-                    if (enableTilt) {
-                      const rotateX = ((y - centerY) / centerY) * -10;
-                      const rotateY = ((x - centerX) / centerX) * 10;
-
-                      gsap.to(el, {
-                        rotateX,
-                        rotateY,
-                        duration: 0.1,
-                        ease: "power2.out",
-                        transformPerspective: 1000,
-                      });
-                    }
-
-                    if (enableMagnetism) {
-                      const magnetX = (x - centerX) * 0.05;
-                      const magnetY = (y - centerY) * 0.05;
-
-                      gsap.to(el, {
-                        x: magnetX,
-                        y: magnetY,
-                        duration: 0.3,
-                        ease: "power2.out",
-                      });
-                    }
-                  };
-
-                  const handleMouseLeave = () => {
-                    if (shouldDisableAnimations) return;
-
-                    if (enableTilt) {
-                      gsap.to(el, {
-                        rotateX: 0,
-                        rotateY: 0,
-                        duration: 0.3,
-                        ease: "power2.out",
-                      });
-                    }
-
-                    if (enableMagnetism) {
-                      gsap.to(el, {
-                        x: 0,
-                        y: 0,
-                        duration: 0.3,
-                        ease: "power2.out",
-                      });
-                    }
-                  };
-
-                  const handleClick = (e: MouseEvent) => {
-                    if (!clickEffect || shouldDisableAnimations) return;
-
-                    const rect = el.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    const maxDistance = Math.max(
-                      Math.hypot(x, y),
-                      Math.hypot(x - rect.width, y),
-                      Math.hypot(x, y - rect.height),
-                      Math.hypot(x - rect.width, y - rect.height)
-                    );
-
-                    const ripple = document.createElement("div");
-                    ripple.style.cssText = `
-                      position: absolute;
-                      width: ${maxDistance * 2}px;
-                      height: ${maxDistance * 2}px;
-                      border-radius: 50%;
-                      background: radial-gradient(circle, rgba(${glowColor}, 0.4) 0%, rgba(${glowColor}, 0.2) 30%, transparent 70%);
-                      left: ${x - maxDistance}px;
-                      top: ${y - maxDistance}px;
-                      pointer-events: none;
-                      z-index: 1000;
-                    `;
-
-                    el.appendChild(ripple);
-
-                    gsap.fromTo(
-                      ripple,
-                      {
-                        scale: 0,
-                        opacity: 1,
-                      },
-                      {
-                        scale: 1,
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: "power2.out",
-                        onComplete: () => ripple.remove(),
-                      }
-                    );
-                  };
-
-                  el.addEventListener("mousemove", handleMouseMove);
-                  el.addEventListener("mouseleave", handleMouseLeave);
-                  el.addEventListener("click", handleClick);
-                }}
+                shouldDisableAnimations={shouldDisableAnimations}
+                enableTilt={enableTilt}
+                enableMagnetism={enableMagnetism}
+                clickEffect={clickEffect}
+                glowColor={glowColor}
               >
                 <div className="card__header flex justify-between gap-3 relative mb-4">
                   <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{
@@ -883,7 +992,7 @@ const MagicBento: React.FC<BentoProps> = ({
                     {card.description}
                   </p>
                 </div>
-              </div>
+              </RegularCard>
             );
           })}
         </div>
