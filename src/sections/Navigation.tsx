@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { TrendingUp, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSelector } from '@/components/language-selector';
+import PremiumLogo from '@/components/PremiumLogo';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,12 +26,8 @@ export default function Navigation() {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-2"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-[#c1ff72] to-[#a8e85a] rounded-lg flex items-center justify-center">
-              <TrendingUp className="w-4 h-4 text-black stroke-[2.5]" />
-          </div>
-            <span className="font-display font-bold text-xl">SPLEUX</span>
+            <PremiumLogo />
           </motion.div>
 
           {/* Desktop Navigation */}
