@@ -43,23 +43,31 @@ export default function HeroSection() {
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
                   className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-display font-bold leading-tight whitespace-normal sm:whitespace-nowrap overflow-visible"
                 >
-                  <TextType
-                    text={[
-                      "Elite Trading",
-                      "Premium Signals", 
-                      "Smart Analytics",
-                      "Pro Intelligence",
-                      "Advanced Trading"
-                    ]}
-                    as="h1"
-                    typingSpeed={100}
-                    pauseDuration={2000}
-                    deletingSpeed={50}
-                    showCursor={true}
-                    cursorCharacter="|"
-                    cursorClassName="text-primary"
-                    className="inline-block whitespace-nowrap text-black dark:text-white"
-                  />
+                  {/* Desktop: Typing Effect */}
+                  <div className="hidden md:block">
+                    <TextType
+                      text={[
+                        "Elite Trading",
+                        "Premium Signals", 
+                        "Smart Analytics",
+                        "Pro Intelligence",
+                        "Advanced Trading"
+                      ]}
+                      as="h1"
+                      typingSpeed={100}
+                      pauseDuration={2000}
+                      deletingSpeed={50}
+                      showCursor={true}
+                      cursorCharacter="|"
+                      cursorClassName="text-primary"
+                      className="inline-block whitespace-nowrap text-black dark:text-white"
+                    />
+                  </div>
+                  
+                  {/* Mobile: Static Text */}
+                  <div className="md:hidden">
+                    <span className="text-black dark:text-white">Elite Trading</span>
+                  </div>
                 </motion.div>
                 <motion.h2
                   initial={{ opacity: 0, x: -50 }}
@@ -197,7 +205,7 @@ export default function HeroSection() {
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.5 }}
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
                 >
-                  <div className="bg-card/90 dark:bg-card/90 backdrop-blur-xl border border-border/50 dark:border-border/50 rounded-3xl p-8 shadow-2xl shadow-primary/10 dark:shadow-primary/10 bg-white/95 dark:bg-card/90">
+                  <div className="bg-card/90 dark:bg-card/90 backdrop-blur-xl border border-border/50 dark:border-border/50 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-primary/10 dark:shadow-primary/10 bg-white/95 dark:bg-card/90">
                     <div className="text-center space-y-4">
                       <motion.div
                         animate={{ 
@@ -209,20 +217,20 @@ export default function HeroSection() {
                           repeat: Infinity,
                           ease: "easeInOut"
                         }}
-                        className="w-16 h-16 mx-auto bg-gradient-to-br from-[#c1ff72] to-[#a8e85a] rounded-2xl flex items-center justify-center shadow-lg shadow-[#c1ff72]/25"
+                        className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-[#c1ff72] to-[#a8e85a] rounded-2xl flex items-center justify-center shadow-lg shadow-[#c1ff72]/25"
                       >
-                        <TrendingUp className="w-8 h-8 text-black stroke-[2.5]" />
+                        <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-black stroke-[2.5]" />
                       </motion.div>
                       <div>
                         <motion.div 
-                          className="text-4xl font-bold"
+                          className="text-3xl sm:text-4xl font-bold"
                           style={{ color: '#c1ff72' }}
                           animate={{ opacity: [0.7, 1, 0.7] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         >
                           97%
                         </motion.div>
-                        <div className="text-sm text-muted-foreground">Win Rate</div>
+                        <div className="text-xs sm:text-sm text-muted-foreground">Win Rate</div>
                       </div>
                     </div>
                   </div>
@@ -233,7 +241,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: -100, y: 0 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.7 }}
-                  className="absolute top-8 sm:top-12 left-0 sm:left-2"
+                  className="absolute top-4 sm:top-8 md:top-12 left-1 sm:left-2"
                 >
                   <motion.div
                     animate={{ 
@@ -245,15 +253,15 @@ export default function HeroSection() {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-3 sm:p-4 shadow-lg dark:shadow-lg"
                   >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-                        <Users className="w-5 h-5" style={{ color: '#c1ff72' }} />
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <Users className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-foreground">35K+</div>
-                        <div className="text-xs text-muted-foreground">Academy Members</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">35K+</div>
+                        <div className="text-xs text-muted-foreground">Academy</div>
                       </div>
                     </div>
                   </motion.div>
@@ -264,7 +272,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: 100, y: 0 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.9 }}
-                  className="absolute top-16 sm:top-24 right-0 sm:right-2"
+                  className="absolute top-8 sm:top-16 md:top-24 right-1 sm:right-2"
                 >
                   <motion.div
                     animate={{ 
@@ -277,15 +285,15 @@ export default function HeroSection() {
                       ease: "easeInOut",
                       delay: 1
                     }}
-                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-3 sm:p-4 shadow-lg dark:shadow-lg"
                   >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-                        <BarChart3 className="w-5 h-5" style={{ color: '#c1ff72' }} />
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-foreground">700+</div>
-                        <div className="text-xs text-muted-foreground">VIP Members</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">700+</div>
+                        <div className="text-xs text-muted-foreground">VIP</div>
                       </div>
                     </div>
                   </motion.div>
@@ -296,7 +304,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: -80, y: 100 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 1.1 }}
-                  className="absolute bottom-12 sm:bottom-16 left-2 sm:left-8"
+                  className="absolute bottom-8 sm:bottom-12 md:bottom-16 left-1 sm:left-2 md:left-8"
                 >
                   <motion.div
                     animate={{ 
@@ -309,14 +317,14 @@ export default function HeroSection() {
                       ease: "easeInOut",
                       delay: 2
                     }}
-                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-3 sm:p-4 shadow-lg dark:shadow-lg"
                   >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-                        <Clock className="w-5 h-5" style={{ color: '#c1ff72' }} />
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <Clock className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-foreground">24/7</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">24/7</div>
                         <div className="text-xs text-muted-foreground">Support</div>
                       </div>
                     </div>
@@ -328,7 +336,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: 80, y: 100 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 1.3 }}
-                  className="absolute bottom-4 sm:bottom-8 right-2 sm:right-12"
+                  className="absolute bottom-2 sm:bottom-4 md:bottom-8 right-1 sm:right-2 md:right-12"
                 >
                   <motion.div
                     animate={{ 
@@ -341,15 +349,15 @@ export default function HeroSection() {
                       ease: "easeInOut",
                       delay: 3
                     }}
-                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-4 shadow-lg dark:shadow-lg"
+                    className="bg-white/95 dark:bg-card/80 backdrop-blur-sm border border-border/30 dark:border-border/30 rounded-2xl p-3 sm:p-4 shadow-lg dark:shadow-lg"
                   >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-                        <Target className="w-5 h-5" style={{ color: '#c1ff72' }} />
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <Target className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-foreground">5+</div>
-                        <div className="text-xs text-muted-foreground">Years Experience</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">5+</div>
+                        <div className="text-xs text-muted-foreground">Years</div>
                       </div>
                     </div>
                   </motion.div>
