@@ -15,12 +15,8 @@ const nextConfig: NextConfig = {
   // Compression
   compress: true,
   
-  // Enable SWC minification
-  swcMinify: true,
-  
   // Experimental features for better performance
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['@/components', '@/sections'],
   },
   
