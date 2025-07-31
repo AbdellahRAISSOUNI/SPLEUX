@@ -99,7 +99,10 @@ export default function HeroSection() {
                 transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
                 className="flex flex-col sm:flex-row gap-4"
               >
-                <motion.button
+                <motion.a
+                  href="http://t.me/spleuxcontact"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative px-8 py-4 font-semibold rounded-2xl overflow-hidden cursor-pointer"
                   style={{ background: '#c1ff72', color: '#000' }}
                   whileHover={{ y: -1 }}
@@ -152,11 +155,11 @@ export default function HeroSection() {
                   
                   {/* Elegant Drop Shadow */}
                   <div className="absolute inset-0 rounded-2xl shadow-lg shadow-[#c1ff72]/20 group-hover:shadow-xl group-hover:shadow-[#c1ff72]/30 transition-shadow duration-300 -z-10" />
-                </motion.button>
+                </motion.a>
 
                 <StarBorder
                   as="a"
-                  href="https://t.me/spleux"
+                  href="https://t.me/spleuxacademy"
                   target="_blank"
                   rel="noopener noreferrer"
                   color="#c1ff72"

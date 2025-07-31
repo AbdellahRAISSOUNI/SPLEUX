@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSelector } from '@/components/language-selector';
 import PremiumLogo from '@/components/PremiumLogo';
 
@@ -45,21 +44,18 @@ export default function Navigation() {
 
                     <div className="flex items-center space-x-3">
             <LanguageSelector />
-            <ThemeToggle />
             
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center space-x-3">
-              <button className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors cursor-pointer">
-                Sign In
-              </button>
-              <motion.button
+              <motion.a
+                href="#cta"
                 className="px-6 py-2.5 rounded-full text-sm font-semibold cursor-pointer"
                 style={{ background: '#c1ff72', color: '#000' }}
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
               >
               Get Started
-              </motion.button>
+              </motion.a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -92,14 +88,10 @@ export default function Navigation() {
                          <div className="flex flex-col space-y-3 pt-4">
                <div className="flex items-center justify-between">
                  <LanguageSelector />
-                 <ThemeToggle />
                </div>
-               <button className="py-2 text-sm font-medium text-foreground cursor-pointer">
-                 Sign In
-               </button>
-               <button className="py-2.5 rounded-full text-sm font-semibold cursor-pointer" style={{ background: '#c1ff72', color: '#000' }}>
+               <a href="#cta" className="py-2.5 rounded-full text-sm font-semibold cursor-pointer" style={{ background: '#c1ff72', color: '#000' }}>
                  Get Started
-               </button>
+               </a>
              </div>
           </div>
         </motion.div>

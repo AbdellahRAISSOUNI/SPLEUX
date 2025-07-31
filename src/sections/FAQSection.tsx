@@ -97,7 +97,7 @@ const FAQItem = ({ question, answer, index }: { question: string; answer: string
 
 export default function FAQSection() {
   return (
-    <section className="relative py-24 sm:py-32 overflow-hidden">
+    <section id="faq" className="relative py-24 sm:py-32 overflow-hidden">
       {/* Sophisticated Background System */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
       

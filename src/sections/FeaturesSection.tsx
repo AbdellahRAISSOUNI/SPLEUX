@@ -196,7 +196,7 @@ export default function FeaturesSection() {
                 >
                   <StarBorder
                     as="a"
-                    href="https://t.me/spleux"
+                    href="https://t.me/spleuxacademy"
                     target="_blank"
                     rel="noopener noreferrer"
                     color="#c1ff72"
@@ -211,7 +211,10 @@ export default function FeaturesSection() {
                 </div>
                   </StarBorder>
 
-              <motion.button
+              <motion.a
+                    href="http://t.me/spleuxcontact"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="px-8 py-4 rounded-2xl font-semibold cursor-pointer border border-gray-600 hover:border-gray-500 transition-all duration-300"
                     style={{ 
                       background: 'linear-gradient(135deg, rgba(193, 255, 114, 0.1) 0%, rgba(193, 255, 114, 0.05) 100%)',
@@ -224,7 +227,7 @@ export default function FeaturesSection() {
                       <ArrowRight className="w-5 h-5" />
                       <span>Start Free Trial</span>
                     </div>
-              </motion.button>
+              </motion.a>
                 </motion.div>
 
                 {/* Trust Indicators */}

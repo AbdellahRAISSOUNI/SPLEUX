@@ -8,7 +8,7 @@ import AnimatedSection from './AnimatedSection';
 
 export default function CTASection() {
   return (
-    <section className="py-20 lg:py-24 relative overflow-hidden">
+    <section id="cta" className="py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5" />
       <div className="absolute inset-0 grid-pattern opacity-10" />
       
@@ -23,7 +23,10 @@ export default function CTASection() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <motion.button
+            <motion.a
+              href="http://t.me/spleuxcontact"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 rounded-full text-lg font-semibold flex items-center space-x-2 group cursor-pointer"
               style={{ background: '#c1ff72', color: '#000' }}
               whileHover={{ scale: 1.02, y: -1 }}
@@ -31,11 +34,11 @@ export default function CTASection() {
             >
               <span>Start Free Trial</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+            </motion.a>
             
             <StarBorder
               as="a"
-              href="https://t.me/spleux"
+              href="https://t.me/spleuxacademy"
               target="_blank"
               rel="noopener noreferrer"
               color="#c1ff72"
