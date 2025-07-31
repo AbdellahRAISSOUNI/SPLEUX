@@ -2,45 +2,45 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
+import { Calendar, TrendingUp, Crown, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
+import StarBorder from '@/components/StarBorder';
 
 export default function PricingSection() {
   const plans = [
     {
       name: "Monthly",
-      price: "$89",
+      price: "$70",
       period: "/month",
-      description: "Perfect for getting started with professional trading signals",
-      features: [
-        "Premium Telegram Access",
-        "Daily Market Analysis",
-        "Real-time Trading Signals",
-        "Risk Management Guidelines",
-        "24/7 Support",
-        "Performance Analytics"
-      ],
-      cta: "Get Started",
+      description: "VIP Telegram access - monthly billing",
+      icon: Calendar,
+      cta: "Choose Monthly",
       popular: false
     },
     {
-      name: "Annual",
-      price: "$790",
-      period: "/year",
-      description: "Best value for serious traders committed to long-term success",
-      features: [
-        "Everything in Monthly",
-        "24/7 Priority Support",
-        "Exclusive Webinars",
-        "Advanced Analytics",
-        "Custom Risk Assessment",
-        "Direct Access to Analysts",
-        "API Access"
-      ],
-      cta: "Get Started",
+      name: "3 Months",
+      price: "$150",
+      period: "/3 months",
+      originalPrice: "$210",
+      description: "VIP Telegram access - 3 months billing",
+      icon: TrendingUp,
+      cta: "Choose 3 Months",
       popular: true,
-      savings: "Save $278"
+      badge: "Most Popular",
+      savings: "Save $60"
+    },
+    {
+      name: "Yearly",
+      price: "$200",
+      period: "/year",
+      originalPrice: "$840",
+      description: "VIP Telegram access - yearly billing",
+      icon: Crown,
+      cta: "Choose Yearly",
+      popular: false,
+      badge: "Best Value",
+      savings: "Save $640"
     }
   ];
 
@@ -51,70 +51,141 @@ export default function PricingSection() {
       <div className="container-responsive relative">
         <AnimatedSection className="text-center mb-16">
           <div className="inline-block px-4 py-2 rounded-full border border-border bg-card/50 text-sm text-primary mb-6">
-            Pricing
+            Simple Pricing
           </div>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            Choose Your Plan
+            Anyone Can Trade — Even If You&apos;re a Beginner
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Professional trading signals trusted by 35,000+ academy members with 5+ years of proven results.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+            At Spleux, we make trading simple and accessible for everyone — even if you&apos;ve never traded before.
+            Our goal is to help you make your first $100 easily, with clear guidance and a supportive community.
           </p>
+          <div className="text-center">
+            <p className="text-xl font-semibold text-foreground mb-2">
+              You don&apos;t need luck — you need the right team.
+            </p>
+            <p className="text-lg" style={{ color: '#c1ff72' }}>
+              Start now, and let&apos;s build your trading journey together.
+            </p>
+          </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {plans.map((plan, index) => (
-            <AnimatedSection
-              key={index}
-              delay={index * 0.1}
-              className={cn(
-                "relative p-8 rounded-2xl border transition-all duration-300",
-                plan.popular
-                  ? "border-primary bg-primary/5 scale-105"
-                  : "border-border hover:border-primary/20 glass"
-              )}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-semibold">
-                  Most Popular
-                </div>
-              )}
+        {/* Free Trial Highlight */}
+        <AnimatedSection className="mb-12">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 border border-primary/30 rounded-3xl p-8 md:p-12 shadow-2xl shadow-primary/10 backdrop-blur-sm">
+              <div className="mb-6">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: '#c1ff72' }}>
+                  1 Month Free Access
+                </h3>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  Learn real strategies and trade with confidence during your free month.
+                </p>
+              </div>
               
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <div className="flex items-baseline justify-center mb-2">
-                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                  <span className="text-muted-foreground">{plan.period}</span>
-            </div>
-                {plan.savings && (
-                  <div className="text-sm text-primary font-medium">{plan.savings}</div>
-                )}
-                <p className="text-muted-foreground mt-4">{plan.description}</p>
-          </div>
-
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center">
-                    <CheckCircle className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                    <span className="text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <motion.button
-                className={cn(
-                  "w-full py-3 rounded-full font-semibold transition-all duration-200 cursor-pointer",
-                  plan.popular
-                    ? ""
-                    : "border border-border hover:bg-accent"
-                )}
-                style={plan.popular ? { background: '#c1ff72', color: '#000' } : {}}
-                whileHover={{ scale: 1.02 }}
+              <motion.a
+                href="https://t.me/spleuxcontact"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 md:px-12 py-4 rounded-full text-lg md:text-xl font-semibold flex items-center space-x-3 group cursor-pointer mx-auto inline-block"
+                style={{ background: '#c1ff72', color: '#000' }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {plan.cta}
-              </motion.button>
-            </AnimatedSection>
-          ))}
+                <span>Start Free Trial</span>
+                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* Pricing Options */}
+        <AnimatedSection className="mb-12">
+          <div className="text-center mb-8">
+            <p className="text-lg text-muted-foreground mb-2">
+              After your trial, you can choose to continue with us:
+            </p>
+            <p className="text-xl font-semibold">
+              <span style={{ color: '#c1ff72' }}>$70/month</span> or <span style={{ color: '#c1ff72' }}>$150/3 months</span> or <span style={{ color: '#c1ff72' }}>$200/yearly</span> — it&apos;s your choice.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+          {plans.map((plan, index) => {
+            const Icon = plan.icon;
+            return (
+              <AnimatedSection
+                key={index}
+                delay={index * 0.1}
+                className={cn(
+                  "relative p-6 md:p-8 rounded-2xl border transition-all duration-300 text-center",
+                  plan.popular
+                    ? "border-primary bg-primary/5 md:scale-105 shadow-lg shadow-primary/20"
+                    : "border-border hover:border-primary/20 glass"
+                )}
+              >
+                {/* Badge */}
+                {plan.badge && (
+                  <div className={cn(
+                    "absolute -top-3 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap",
+                    plan.popular 
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-card border border-border text-foreground"
+                  )}>
+                    {plan.badge}
+                  </div>
+                )}
+                
+                {/* Icon */}
+                <div className="flex justify-center mb-4 md:mb-6">
+                  <div className="p-3 rounded-full bg-primary/10 border border-primary/20">
+                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                  </div>
+                </div>
+                
+                {/* Plan Name */}
+                <h3 className="text-lg md:text-xl font-bold mb-2">{plan.name}</h3>
+                
+                {/* Price */}
+                <div className="mb-4 md:mb-6">
+                  <div className="flex items-baseline justify-center mb-1">
+                    <span className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</span>
+                    <span className="text-muted-foreground ml-1 text-sm md:text-base">{plan.period}</span>
+                  </div>
+                  
+                  {/* Original Price & Savings */}
+                  {plan.originalPrice && (
+                    <div className="flex items-center justify-center gap-2 text-xs md:text-sm">
+                      <span className="text-muted-foreground line-through">{plan.originalPrice}</span>
+                      {plan.savings && (
+                        <span className="text-primary font-medium">{plan.savings}</span>
+                      )}
+                    </div>
+                  )}
+                  
+                  <p className="text-muted-foreground mt-2 text-sm md:text-base">{plan.description}</p>
+                </div>
+
+                {/* CTA Button */}
+                <motion.a
+                  href="https://t.me/spleuxcontact"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "w-full py-3 rounded-full font-semibold transition-all duration-200 cursor-pointer text-sm md:text-base inline-block text-center",
+                    plan.popular
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "border border-border hover:bg-accent hover:border-primary/20"
+                  )}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {plan.cta}
+                </motion.a>
+              </AnimatedSection>
+            );
+          })}
           </div>
         </div>
       </section>
