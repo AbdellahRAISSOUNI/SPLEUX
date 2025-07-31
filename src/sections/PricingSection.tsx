@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, TrendingUp, Crown, ArrowRight } from 'lucide-react';
+import { Clock, TrendingUp, Crown, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
-import StarBorder from '@/components/StarBorder';
+import SpotlightCard from '@/components/SpotlightCard';
 
 export default function PricingSection() {
   const plans = [
@@ -14,7 +14,7 @@ export default function PricingSection() {
       price: "$70",
       period: "/month",
       description: "VIP Telegram access - monthly billing",
-      icon: Calendar,
+      icon: Clock,
       cta: "Choose Monthly",
       popular: false
     },
@@ -114,21 +114,25 @@ export default function PricingSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
           {plans.map((plan, index) => {
             const Icon = plan.icon;
+            const spotlightColors = [
+              "rgba(193, 255, 114, 0.15)", // Primary green for Monthly
+              "rgba(193, 255, 114, 0.25)", // Brighter green for 3 Months (Most Popular)
+              "rgba(193, 255, 114, 0.35)"  // Brightest green for Yearly (Best Value)
+            ];
+            
             return (
               <AnimatedSection
                 key={index}
                 delay={index * 0.1}
                 className={cn(
-                  "relative p-6 md:p-8 rounded-2xl border transition-all duration-300 text-center",
-                  plan.popular
-                    ? "border-primary bg-primary/5 md:scale-105 shadow-lg shadow-primary/20"
-                    : "border-border hover:border-primary/20 glass"
+                  "relative",
+                  plan.popular ? "md:scale-105" : ""
                 )}
               >
                 {/* Badge */}
                 {plan.badge && (
                   <div className={cn(
-                    "absolute -top-3 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap",
+                    "absolute -top-3 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap z-10",
                     plan.popular 
                       ? "bg-primary text-primary-foreground"
                       : "bg-card border border-border text-foreground"
@@ -137,52 +141,67 @@ export default function PricingSection() {
                   </div>
                 )}
                 
-                {/* Icon */}
-                <div className="flex justify-center mb-4 md:mb-6">
-                  <div className="p-3 rounded-full bg-primary/10 border border-primary/20">
-                    <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
-                  </div>
-                </div>
-                
-                {/* Plan Name */}
-                <h3 className="text-lg md:text-xl font-bold mb-2">{plan.name}</h3>
-                
-                {/* Price */}
-                <div className="mb-4 md:mb-6">
-                  <div className="flex items-baseline justify-center mb-1">
-                    <span className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</span>
-                    <span className="text-muted-foreground ml-1 text-sm md:text-base">{plan.period}</span>
-                  </div>
-                  
-                  {/* Original Price & Savings */}
-                  {plan.originalPrice && (
-                    <div className="flex items-center justify-center gap-2 text-xs md:text-sm">
-                      <span className="text-muted-foreground line-through">{plan.originalPrice}</span>
-                      {plan.savings && (
-                        <span className="text-primary font-medium">{plan.savings}</span>
-                      )}
-                    </div>
-                  )}
-                  
-                  <p className="text-muted-foreground mt-2 text-sm md:text-base">{plan.description}</p>
-                </div>
-
-                {/* CTA Button */}
-                <motion.a
-                  href="https://t.me/spleuxcontact"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <SpotlightCard 
                   className={cn(
-                    "w-full py-3 rounded-full font-semibold transition-all duration-200 cursor-pointer text-sm md:text-base inline-block text-center",
-                    plan.popular
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : "border border-border hover:bg-accent hover:border-primary/20"
+                    "p-6 md:p-8 text-center border-0",
+                    plan.popular 
+                      ? "bg-gradient-to-br from-primary/10 via-primary/5 to-transparent"
+                      : "bg-gradient-to-br from-card/50 to-card/30"
                   )}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  spotlightColor={spotlightColors[index]}
                 >
-                  {plan.cta}
-                </motion.a>
+                  {/* Icon */}
+                  <div className="flex justify-center mb-4 md:mb-6">
+                    <div className={cn(
+                      "p-3 rounded-full border",
+                      plan.popular
+                        ? "bg-primary/20 border-primary/40"
+                        : "bg-primary/10 border-primary/20"
+                    )}>
+                      <Icon className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+                    </div>
+                  </div>
+                  
+                  {/* Plan Name */}
+                  <h3 className="text-lg md:text-xl font-bold mb-2">{plan.name}</h3>
+                  
+                  {/* Price */}
+                  <div className="mb-4 md:mb-6">
+                    <div className="flex items-baseline justify-center mb-1">
+                      <span className="text-3xl md:text-4xl font-bold text-primary">{plan.price}</span>
+                      <span className="text-muted-foreground ml-1 text-sm md:text-base">{plan.period}</span>
+                    </div>
+                    
+                    {/* Original Price & Savings */}
+                    {plan.originalPrice && (
+                      <div className="flex items-center justify-center gap-2 text-xs md:text-sm">
+                        <span className="text-muted-foreground line-through">{plan.originalPrice}</span>
+                        {plan.savings && (
+                          <span className="text-primary font-medium">{plan.savings}</span>
+                        )}
+                      </div>
+                    )}
+                    
+                    <p className="text-muted-foreground mt-2 text-sm md:text-base">{plan.description}</p>
+                  </div>
+
+                  {/* CTA Button */}
+                  <motion.a
+                    href="https://t.me/spleuxcontact"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "w-full py-3 rounded-full font-semibold transition-all duration-200 cursor-pointer text-sm md:text-base inline-block text-center",
+                      plan.popular
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : "border border-border hover:bg-accent hover:border-primary/20"
+                    )}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {plan.cta}
+                  </motion.a>
+                </SpotlightCard>
               </AnimatedSection>
             );
           })}

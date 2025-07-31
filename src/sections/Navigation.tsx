@@ -42,8 +42,11 @@ export default function Navigation() {
             ))}
           </div>
 
-                    <div className="flex items-center space-x-3">
-            <LanguageSelector />
+          <div className="flex items-center space-x-3">
+            {/* Desktop Language Selector */}
+            <div className="hidden lg:block">
+              <LanguageSelector />
+            </div>
             
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center space-x-3">
@@ -54,7 +57,7 @@ export default function Navigation() {
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
               >
-              Get Started
+                Get Started
               </motion.a>
             </div>
 
@@ -74,25 +77,42 @@ export default function Navigation() {
           animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
           className="lg:hidden overflow-hidden"
         >
-          <div className="py-4 space-y-4 border-t border-border">
-            {['Features', 'Pricing', 'Testimonials', 'FAQ'].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="block py-2 text-muted-foreground hover:text-foreground transition-colors"
+          <div className="py-6 space-y-6 border-t border-border">
+            {/* Navigation Links */}
+            <div className="space-y-4">
+              {['Features', 'Pricing', 'Testimonials', 'FAQ'].map((item) => (
+                <a
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className="block py-3 text-muted-foreground hover:text-foreground transition-colors font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+            
+            {/* Mobile Language Selector */}
+            <div className="pt-4 border-t border-border/50">
+              <div className="mb-4">
+                <span className="text-sm font-medium text-muted-foreground mb-3 block">Language</span>
+                <LanguageSelector />
+              </div>
+            </div>
+            
+            {/* Mobile CTA */}
+            <div className="pt-4 border-t border-border/50">
+              <motion.a 
+                href="#cta" 
+                className="block w-full py-4 px-6 rounded-full text-base font-semibold cursor-pointer text-center"
+                style={{ background: '#c1ff72', color: '#000' }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setIsOpen(false)}
               >
-                {item}
-              </a>
-            ))}
-                         <div className="flex flex-col space-y-3 pt-4">
-               <div className="flex items-center justify-between">
-                 <LanguageSelector />
-               </div>
-               <a href="#cta" className="py-2.5 rounded-full text-sm font-semibold cursor-pointer" style={{ background: '#c1ff72', color: '#000' }}>
-                 Get Started
-               </a>
-             </div>
+                Get Started
+              </motion.a>
+            </div>
           </div>
         </motion.div>
       </div>

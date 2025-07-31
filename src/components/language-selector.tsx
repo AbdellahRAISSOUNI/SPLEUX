@@ -43,7 +43,7 @@ export function LanguageSelector() {
     <div className="relative" ref={dropdownRef}>
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
+        className="group relative flex items-center space-x-2 px-3 sm:px-4 py-2.5 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer w-full sm:w-auto"
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.02 }}
       >
@@ -90,7 +90,7 @@ export function LanguageSelector() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="absolute top-full mt-3 right-0 w-80 z-50"
+              className="absolute top-full mt-3 right-0 w-80 sm:w-80 w-[calc(100vw-2rem)] z-50"
             >
               <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl overflow-hidden">
                 {/* Header */}
@@ -103,7 +103,7 @@ export function LanguageSelector() {
                 
                 {/* Language List */}
                 <div className="p-2 max-h-80 overflow-y-auto custom-scrollbar">
-                  <div className="space-y-1">
+                  <div className="space-y-1 sm:space-y-1 space-y-2">
                     {languages.map((language, index) => (
                       <motion.button
                         key={language.code}
@@ -111,7 +111,7 @@ export function LanguageSelector() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05, duration: 0.3 }}
-                        className={`group relative w-full flex items-center justify-between p-3 rounded-xl transition-all duration-300 cursor-pointer ${
+                        className={`group relative w-full flex items-center justify-between p-3 sm:p-3 p-4 rounded-xl transition-all duration-300 cursor-pointer ${
                           selectedLang.code === language.code
                             ? 'bg-primary/10 border border-primary/20 text-primary'
                             : 'hover:bg-accent/50 text-foreground hover:translate-x-1'
