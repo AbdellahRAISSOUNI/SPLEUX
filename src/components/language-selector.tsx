@@ -43,7 +43,7 @@ export function LanguageSelector() {
     <div className="relative" ref={dropdownRef}>
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex items-center space-x-2 px-3 sm:px-4 py-2.5 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer w-full sm:w-auto"
+        className="group relative flex items-center space-x-2 px-2 sm:px-4 py-2 rounded-xl bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer w-auto"
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.02 }}
       >
@@ -90,7 +90,7 @@ export function LanguageSelector() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="absolute top-full mt-3 right-0 w-80 sm:w-80 w-[calc(100vw-2rem)] z-50"
+              className="absolute top-full mt-3 right-0 w-80 sm:w-80 w-64 z-50 sm:right-0 right-0"
             >
               <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl overflow-hidden">
                 {/* Header */}

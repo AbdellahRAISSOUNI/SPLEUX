@@ -52,13 +52,20 @@ export default function Navigation() {
             <div className="hidden lg:flex items-center space-x-3">
               <motion.a
                 href="#cta"
-                className="px-6 py-2.5 rounded-full text-sm font-semibold cursor-pointer"
+                className="px-6 py-2.5 rounded-full text-sm font-semibold cursor-pointer relative overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                 style={{ background: '#c1ff72', color: '#000' }}
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Get Started
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10">Get Started</span>
               </motion.a>
+            </div>
+
+            {/* Mobile Language Selector */}
+            <div className="lg:hidden">
+              <LanguageSelector />
             </div>
 
             {/* Mobile Menu Button */}
@@ -77,40 +84,29 @@ export default function Navigation() {
           animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
           className="lg:hidden overflow-hidden"
         >
-          <div className="py-6 space-y-6 border-t border-border">
-            {/* Navigation Links */}
-            <div className="space-y-4">
-              {['Features', 'Pricing', 'Testimonials', 'FAQ'].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="block py-3 text-muted-foreground hover:text-foreground transition-colors font-medium"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-            
-            {/* Mobile Language Selector */}
-            <div className="pt-4 border-t border-border/50">
-              <div className="mb-4">
-                <span className="text-sm font-medium text-muted-foreground mb-3 block">Language</span>
-                <LanguageSelector />
-              </div>
-            </div>
-            
-            {/* Mobile CTA */}
-            <div className="pt-4 border-t border-border/50">
+          <div className="py-4 space-y-4 border-t border-border">
+            {['Features', 'Pricing', 'Testimonials', 'FAQ'].map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="block py-2 text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {item}
+              </a>
+            ))}
+            <div className="flex flex-col space-y-3 pt-4">
               <motion.a 
                 href="#cta" 
-                className="block w-full py-4 px-6 rounded-full text-base font-semibold cursor-pointer text-center"
+                className="py-3 px-6 rounded-full text-sm font-semibold cursor-pointer text-center relative overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                 style={{ background: '#c1ff72', color: '#000' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsOpen(false)}
               >
-                Get Started
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10">Get Started</span>
               </motion.a>
             </div>
           </div>
