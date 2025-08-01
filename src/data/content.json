@@ -1,0 +1,120 @@
+{
+  "pricing": {
+    "title": "Anyone Can Trade — Even If You're a Beginner",
+    "subtitle": "At Spleux, we make trading simple and accessible for everyone — even if you've never traded before. Our goal is to help you make your first $100 easily, with clear guidance and a supportive community.",
+    "plans": [
+      {
+        "name": "Monthly",
+        "price": "$70",
+        "period": "/month",
+        "description": "VIP Telegram access - monthly billing",
+        "cta": "Choose Monthly",
+        "popular": false
+      },
+      {
+        "name": "3 Months",
+        "price": "$150",
+        "period": "/3 months",
+        "originalPrice": "$210",
+        "description": "VIP Telegram access - 3 months billing",
+        "cta": "Choose 3 Months",
+        "popular": true,
+        "badge": "Most Popular",
+        "savings": "Save $60"
+      },
+      {
+        "name": "Yearly",
+        "price": "$200",
+        "period": "/year",
+        "originalPrice": "$840",
+        "description": "VIP Telegram access - yearly billing",
+        "cta": "Choose Yearly",
+        "popular": false,
+        "badge": "Best Value",
+        "savings": "Save $640"
+      }
+    ],
+    "freeTrial": {
+      "title": "1 Month Free Access",
+      "description": "Learn real strategies and trade with confidence during your free month.",
+      "cta": "Start Free Trial"
+    }
+  },
+  "faq": [
+    {
+      "question": "What makes your signals different from others?",
+      "answer": "Our signals are powered by advanced AI algorithms with 97% accuracy, analyzing 50+ market indicators simultaneously. We provide real-time alerts with exact entry/exit points, stop-loss levels, and position sizing recommendations. Unlike basic signal services, we include comprehensive educational content and 24/7 expert support."
+    },
+    {
+      "question": "Is this service really legitimate?",
+      "answer": "Absolutely! We have 35,000+ verified members with 5+ years of proven success. Our 97% accuracy rate is backed by real trading results and transparent performance tracking. We offer a 30-day money-back guarantee and 7-day trial to prove our legitimacy. Our Telegram community shows live trading results daily."
+    },
+    {
+      "question": "What's included in the academy membership?",
+      "answer": "Full access to our premium signals, live trading sessions, video tutorials, risk management guides, and private Telegram community. You'll also get one-on-one mentoring, market analysis reports, and priority support. Everything you need to become a successful trader is included."
+    },
+    {
+      "question": "How do I get started?",
+      "answer": "Getting started is simple! Choose your membership plan, complete the secure payment, and you'll receive instant access to our signals and academy. We'll guide you through setup, provide your first signals within 24 hours, and connect you with our expert support team. Start your journey today!"
+    }
+  ],
+  "links": {
+    "primary": {
+      "contact": "http://t.me/spleuxcontact",
+      "academy": "https://t.me/spleuxacademy"
+    },
+    "footer": {
+      "company": [
+        {
+          "name": "About Us",
+          "url": "#"
+        },
+        {
+          "name": "Contact",
+          "url": "#"
+        },
+        {
+          "name": "Support",
+          "url": "#"
+        },
+        {
+          "name": "Blog",
+          "url": "#"
+        }
+      ],
+      "legal": [
+        {
+          "name": "Terms of Service",
+          "url": "#"
+        },
+        {
+          "name": "Privacy Policy",
+          "url": "#"
+        },
+        {
+          "name": "Risk Disclosure",
+          "url": "#"
+        },
+        {
+          "name": "Cookies",
+          "url": "#"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "title": "Elite Trading Intelligence",
+    "subtitle": "Advanced algorithmic signals with 97% accuracy. Join our global community of 35,000+ members with 15+ years of proven success.",
+    "stats": {
+      "winRate": "97%",
+      "members": "35K+",
+      "vip": "700+",
+      "support": "24/7",
+      "experience": "5+"
+    }
+  },
+  "cta": {
+    "title": "Ready to Transform Your Trading?",
+    "subtitle": "Join our global community of 35,000+ academy members who have elevated their performance with Spleux. Start your journey with 5+ years of proven experience and daily free signals."
+  }
+}
