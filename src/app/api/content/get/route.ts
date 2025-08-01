@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get GitHub configuration
     const githubToken = process.env.GITHUB_TOKEN;
@@ -9,8 +9,8 @@ export async function GET(request: NextRequest) {
 
     if (!githubToken || !repoOwner || !repoName) {
       // Fallback to local file if GitHub not configured
-      const { getContent } = await import('@/lib/content');
-      return NextResponse.json(getContent());
+      const { getServerContent } = await import('@/lib/server-content');
+      return NextResponse.json(await getServerContent());
     }
 
     // Get current file content from GitHub
@@ -29,8 +29,8 @@ export async function GET(request: NextRequest) {
     if (!response.ok) {
       console.error('Failed to fetch from GitHub:', response.status, response.statusText);
       // Fallback to local file
-      const { getContent } = await import('@/lib/content');
-      return NextResponse.json(getContent());
+      const { getServerContent } = await import('@/lib/server-content');
+      return NextResponse.json(await getServerContent());
     }
 
     const fileData = await response.json();
@@ -49,9 +49,10 @@ export async function GET(request: NextRequest) {
     
     // Fallback to local file
     try {
-      const { getContent } = await import('@/lib/content');
-      return NextResponse.json(getContent());
+      const { getServerContent } = await import('@/lib/server-content');
+      return NextResponse.json(await getServerContent());
     } catch (fallbackError) {
+      console.error('Fallback error:', fallbackError);
       return NextResponse.json(
         { error: 'Failed to load content' },
         { status: 500 }

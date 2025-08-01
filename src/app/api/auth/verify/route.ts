@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     const token = authorization.replace('Bearer ', '');
 
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const decoded = jwt.verify(token, JWT_SECRET) as { email: string; name: string };
       
       return NextResponse.json({
         user: {
@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
         }
       });
     } catch (jwtError) {
+      console.error('JWT verification failed:', jwtError);
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
   } catch (error) {

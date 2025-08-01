@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Save, Eye, EyeOff, User, LogOut, Settings, DollarSign, HelpCircle, Link2, Home, Lock, RefreshCw } from 'lucide-react';
-import { getContent, type ContentData, type PricingPlan, type FAQItem, type LinkItem } from '@/lib/content';
+import { getContent, type ContentData } from '@/lib/content';
 
 interface AdminUser {
   email: string;
@@ -56,6 +56,7 @@ export default function AdminPage() {
         }));
       }
     } catch (error) {
+      console.error('Login error:', error);
       setLoginForm(prev => ({ 
         ...prev, 
         error: 'Network error. Please try again.', 
@@ -84,7 +85,8 @@ export default function AdminPage() {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('Token verification failed:', error);
         localStorage.removeItem('admin_token');
         setLoading(false);
       });
@@ -352,7 +354,7 @@ function PricingEditor({ content, setContent, previewMode }: {
   setContent: (content: ContentData) => void;
   previewMode: boolean;
 }) {
-  const updatePricing = (field: string, value: any) => {
+  const updatePricing = (field: string, value: unknown) => {
     setContent({
       ...content,
       pricing: {
@@ -362,7 +364,7 @@ function PricingEditor({ content, setContent, previewMode }: {
     });
   };
 
-  const updatePlan = (index: number, field: string, value: any) => {
+  const updatePlan = (index: number, field: string, value: unknown) => {
     const newPlans = [...content.pricing.plans];
     newPlans[index] = { ...newPlans[index], [field]: value };
     updatePricing('plans', newPlans);
@@ -741,7 +743,7 @@ function HeroEditor({ content, setContent, previewMode }: {
   setContent: (content: ContentData) => void;
   previewMode: boolean;
 }) {
-  const updateHero = (field: string, value: any) => {
+  const updateHero = (field: string, value: unknown) => {
     setContent({
       ...content,
       hero: {

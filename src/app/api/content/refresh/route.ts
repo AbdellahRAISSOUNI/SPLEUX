@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     // This endpoint can be called to force refresh of content cache
     // We'll trigger a re-read of the content file
@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString()
     });
   } catch (error) {
+    console.error('Refresh error:', error);
     return NextResponse.json({ 
       error: 'Failed to refresh content cache' 
     }, { status: 500 });
