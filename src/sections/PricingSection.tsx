@@ -4,45 +4,24 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, TrendingUp, Crown, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getContent } from '@/lib/content';
 import AnimatedSection from './AnimatedSection';
 import SpotlightCard from '@/components/SpotlightCard';
 
 export default function PricingSection() {
-  const plans = [
-    {
-      name: "Monthly",
-      price: "$70",
-      period: "/month",
-      description: "VIP Telegram access - monthly billing",
-      icon: Clock,
-      cta: "Choose Monthly",
-      popular: false
-    },
-    {
-      name: "3 Months",
-      price: "$150",
-      period: "/3 months",
-      originalPrice: "$210",
-      description: "VIP Telegram access - 3 months billing",
-      icon: TrendingUp,
-      cta: "Choose 3 Months",
-      popular: true,
-      badge: "Most Popular",
-      savings: "Save $60"
-    },
-    {
-      name: "Yearly",
-      price: "$200",
-      period: "/year",
-      originalPrice: "$840",
-      description: "VIP Telegram access - yearly billing",
-      icon: Crown,
-      cta: "Choose Yearly",
-      popular: false,
-      badge: "Best Value",
-      savings: "Save $640"
-    }
-  ];
+  const content = getContent();
+  const { pricing } = content;
+  
+  const iconMap = {
+    "Monthly": Clock,
+    "3 Months": TrendingUp,
+    "Yearly": Crown
+  };
+  
+  const plansWithIcons = pricing.plans.map(plan => ({
+    ...plan,
+    icon: iconMap[plan.name as keyof typeof iconMap] || Clock
+  }));
 
   return (
     <section id="pricing" className="py-20 lg:py-32 relative">
@@ -54,11 +33,10 @@ export default function PricingSection() {
             Simple Pricing
           </div>
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            Anyone Can Trade — Even If You&apos;re a Beginner
+            {pricing.title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-            At Spleux, we make trading simple and accessible for everyone — even if you&apos;ve never traded before.
-            Our goal is to help you make your first $100 easily, with clear guidance and a supportive community.
+            {pricing.subtitle}
           </p>
           <div className="text-center">
             <p className="text-xl font-semibold text-foreground mb-2">
@@ -76,15 +54,15 @@ export default function PricingSection() {
             <div className="bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 border border-primary/30 rounded-3xl p-8 md:p-12 shadow-2xl shadow-primary/10 backdrop-blur-sm">
               <div className="mb-6">
                 <h3 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: '#c1ff72' }}>
-                  1 Month Free Access
+                  {pricing.freeTrial.title}
                 </h3>
                 <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  Learn real strategies and trade with confidence during your free month.
+                  {pricing.freeTrial.description}
                 </p>
               </div>
               
               <motion.a
-                href="https://t.me/spleuxcontact"
+                href={content.links.primary.contact}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 md:px-12 py-4 rounded-full text-lg md:text-xl font-semibold flex items-center space-x-3 group cursor-pointer mx-auto inline-block"
@@ -92,7 +70,7 @@ export default function PricingSection() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span>Start Free Trial</span>
+                <span>{pricing.freeTrial.cta}</span>
                 <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
               </motion.a>
             </div>
@@ -112,7 +90,7 @@ export default function PricingSection() {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => {
+          {plansWithIcons.map((plan, index) => {
             const Icon = plan.icon;
             const spotlightColors = [
               "rgba(193, 255, 114, 0.15)", // Primary green for Monthly
@@ -187,7 +165,7 @@ export default function PricingSection() {
 
                   {/* CTA Button */}
                   <motion.a
-                    href="https://t.me/spleuxcontact"
+                    href={content.links.primary.contact}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(

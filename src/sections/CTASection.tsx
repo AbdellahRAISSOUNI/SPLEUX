@@ -3,10 +3,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { getContent } from '@/lib/content';
 import StarBorder from '@/components/StarBorder';
 import AnimatedSection from './AnimatedSection';
 
 export default function CTASection() {
+  const content = getContent();
+  const { cta, links } = content;
+  
   return (
     <section id="cta" className="py-20 lg:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5" />
@@ -15,16 +19,15 @@ export default function CTASection() {
       <div className="container-responsive relative">
         <AnimatedSection className="text-center max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
-            Ready to Transform Your Trading?
+            {cta.title}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
-            Join our global community of 35,000+ academy members who have elevated their performance with Spleux. 
-            Start your journey with 5+ years of proven experience and daily free signals.
+            {cta.subtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.a
-              href="http://t.me/spleuxcontact"
+              href={links.primary.contact}
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 rounded-full text-lg font-semibold flex items-center space-x-2 group cursor-pointer"
@@ -38,7 +41,7 @@ export default function CTASection() {
             
             <StarBorder
               as="a"
-              href="https://t.me/spleuxacademy"
+              href={links.primary.academy}
               target="_blank"
               rel="noopener noreferrer"
               color="#c1ff72"

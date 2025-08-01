@@ -3,25 +3,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
-
-const faqItems = [
-  {
-    question: "What makes your signals different from others?",
-    answer: "Our signals are powered by advanced AI algorithms with 97% accuracy, analyzing 50+ market indicators simultaneously. We provide real-time alerts with exact entry/exit points, stop-loss levels, and position sizing recommendations. Unlike basic signal services, we include comprehensive educational content and 24/7 expert support."
-  },
-  {
-    question: "Is this service really legitimate?",
-    answer: "Absolutely! We have 35,000+ verified members with 5+ years of proven success. Our 97% accuracy rate is backed by real trading results and transparent performance tracking. We offer a 30-day money-back guarantee and 7-day trial to prove our legitimacy. Our Telegram community shows live trading results daily."
-  },
-  {
-    question: "What's included in the academy membership?",
-    answer: "Full access to our premium signals, live trading sessions, video tutorials, risk management guides, and private Telegram community. You'll also get one-on-one mentoring, market analysis reports, and priority support. Everything you need to become a successful trader is included."
-  },
-  {
-    question: "How do I get started?",
-    answer: "Getting started is simple! Choose your membership plan, complete the secure payment, and you'll receive instant access to our signals and academy. We'll guide you through setup, provide your first signals within 24 hours, and connect you with our expert support team. Start your trading journey today!"
-  }
-];
+import { getContent } from '@/lib/content';
 
 const FAQItem = ({ question, answer, index }: { question: string; answer: string; index: number }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -96,6 +78,9 @@ const FAQItem = ({ question, answer, index }: { question: string; answer: string
 };
 
 export default function FAQSection() {
+  const content = getContent();
+  const { faq } = content;
+  
   return (
     <section id="faq" className="relative py-24 sm:py-32 overflow-hidden">
       {/* Sophisticated Background System */}
@@ -150,7 +135,7 @@ export default function FAQSection() {
 
           {/* FAQ Items */}
           <div className="space-y-3 sm:space-y-4">
-            {faqItems.map((item, index) => (
+            {faq.map((item, index) => (
               <FAQItem 
                 key={index}
                 question={item.question}

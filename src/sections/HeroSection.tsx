@@ -12,10 +12,14 @@ import {
   BarChart3, 
   Target
 } from 'lucide-react';
+import { getContent } from '@/lib/content';
 import TextType from '@/components/TextType';
 import StarBorder from '@/components/StarBorder';
 
 export default function HeroSection() {
+  const content = getContent();
+  const { hero, links } = content;
+  
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-10">
       {/* Sophisticated Background System */}
@@ -66,7 +70,7 @@ export default function HeroSection() {
                   
                   {/* Mobile: Static Text */}
                   <div className="md:hidden">
-                    <span className="text-black dark:text-white">Elite Trading</span>
+                    <span className="text-black dark:text-white">{hero.title.split(' ')[0]} {hero.title.split(' ')[1]}</span>
                   </div>
                 </motion.div>
                 <motion.h2
@@ -76,7 +80,7 @@ export default function HeroSection() {
                   className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-display font-bold leading-tight whitespace-normal sm:whitespace-nowrap"
                   style={{ color: '#c1ff72' }}
                 >
-                  Intelligence
+                  {hero.title.split(' ')[2]}
                 </motion.h2>
               </div>
 
@@ -87,9 +91,7 @@ export default function HeroSection() {
                 transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: 0.6 }}
                 className="text-xl md:text-2xl text-muted-foreground leading-relaxed"
               >
-                Advanced algorithmic signals with{" "}
-                <span className="font-semibold" style={{ color: '#c1ff72' }}>97% accuracy</span>.
-                Join our global community of 35,000+ members with 5+ years of proven success.
+                {hero.subtitle}
               </motion.p>
 
               {/* Action Buttons */}
@@ -100,7 +102,7 @@ export default function HeroSection() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <motion.a
-                  href="http://t.me/spleuxcontact"
+                  href={links.primary.contact}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative px-8 py-4 font-semibold rounded-2xl overflow-hidden cursor-pointer"
@@ -159,7 +161,7 @@ export default function HeroSection() {
 
                 <StarBorder
                   as="a"
-                  href="https://t.me/spleuxacademy"
+                  href={links.primary.academy}
                   target="_blank"
                   rel="noopener noreferrer"
                   color="#c1ff72"
@@ -231,7 +233,7 @@ export default function HeroSection() {
                           animate={{ opacity: [0.7, 1, 0.7] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         >
-                          97%
+                          {hero.stats.winRate}
                         </motion.div>
                         <div className="text-xs sm:text-sm text-muted-foreground">Win Rate</div>
                       </div>
@@ -263,7 +265,7 @@ export default function HeroSection() {
                         <Users className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-lg sm:text-2xl font-bold text-foreground">35K+</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">{hero.stats.members}</div>
                         <div className="text-xs text-muted-foreground">Academy</div>
                       </div>
                     </div>
@@ -295,7 +297,7 @@ export default function HeroSection() {
                         <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-lg sm:text-2xl font-bold text-foreground">700+</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">{hero.stats.vip}</div>
                         <div className="text-xs text-muted-foreground">VIP</div>
                       </div>
                     </div>
@@ -327,7 +329,7 @@ export default function HeroSection() {
                         <Clock className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-lg sm:text-2xl font-bold text-foreground">24/7</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">{hero.stats.support}</div>
                         <div className="text-xs text-muted-foreground">Support</div>
                       </div>
                     </div>
@@ -359,7 +361,7 @@ export default function HeroSection() {
                         <Target className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: '#c1ff72' }} />
                       </div>
                       <div>
-                        <div className="text-lg sm:text-2xl font-bold text-foreground">5+</div>
+                        <div className="text-lg sm:text-2xl font-bold text-foreground">{hero.stats.experience}</div>
                         <div className="text-xs text-muted-foreground">Years</div>
                       </div>
                     </div>

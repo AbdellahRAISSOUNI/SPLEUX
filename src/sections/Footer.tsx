@@ -3,8 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Globe, ArrowUpRight } from 'lucide-react';
+import { getContent } from '@/lib/content';
 
 export default function Footer() {
+  const content = getContent();
+  const { links } = content;
+  
   return (
     <footer className="py-20 border-t border-border/20 relative bg-gradient-to-b from-background to-background/95">
       <div className="container-responsive">
@@ -49,20 +53,26 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-6 text-foreground">Company</h4>
             <ul className="space-y-4 text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">About Us</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Contact</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Support</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Blog</a></li>
+              {links.footer.company.map((link, index) => (
+                <li key={index}>
+                  <a href={link.url} className="hover:text-foreground transition-colors duration-200">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-6 text-foreground">Legal</h4>
             <ul className="space-y-4 text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Risk Disclosure</a></li>
-              <li><a href="#" className="hover:text-foreground transition-colors duration-200">Cookies</a></li>
+              {links.footer.legal.map((link, index) => (
+                <li key={index}>
+                  <a href={link.url} className="hover:text-foreground transition-colors duration-200">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
