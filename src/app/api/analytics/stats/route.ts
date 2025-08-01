@@ -29,7 +29,7 @@ async function loadAnalyticsData(): Promise<StoredAnalyticsEvent[]> {
   try {
     const data = await fs.readFile(ANALYTICS_FILE, 'utf-8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch {
     console.log('Analytics file not found');
     return [];
   }
@@ -42,10 +42,6 @@ function isWithinPeriod(timestamp: number, days: number): boolean {
 }
 
 function generateStats(events: StoredAnalyticsEvent[]): AnalyticsStats {
-  const now = Date.now();
-  const today = isWithinPeriod(now, 1);
-  const thisWeek = isWithinPeriod(now, 7);
-  const thisMonth = isWithinPeriod(now, 30);
 
   // Page views
   const pageViewEvents = events.filter(e => e.type === 'page_view');

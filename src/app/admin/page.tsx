@@ -6,6 +6,32 @@ import { Save, Eye, EyeOff, User, LogOut, Settings, DollarSign, HelpCircle, Link
 import { getContent, type ContentData } from '@/lib/content';
 import { AnalyticsStats } from '@/lib/analytics';
 
+// Utility function to sanitize user input and prevent React errors
+function sanitizeText(text: string): string {
+  if (!text) return text;
+  
+  // Replace unescaped quotes with HTML entities
+  return text
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/&/g, '&amp;');
+}
+
+// Utility function to safely render sanitized content
+function renderSafeText(text: string): string {
+  if (!text) return text;
+  
+  // Decode HTML entities for display
+  return text
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&');
+}
+
 interface AdminUser {
   email: string;
   name: string;
@@ -558,33 +584,33 @@ function PricingEditor({ content, setContent, previewMode }: {
       ...content,
       pricing: {
         ...content.pricing,
-        [field]: value
+        [field]: typeof value === 'string' ? sanitizeText(value) : value
       }
     });
   };
 
   const updatePlan = (index: number, field: string, value: unknown) => {
     const newPlans = [...content.pricing.plans];
-    newPlans[index] = { ...newPlans[index], [field]: value };
+    newPlans[index] = { ...newPlans[index], [field]: typeof value === 'string' ? sanitizeText(value) : value };
     updatePricing('plans', newPlans);
   };
 
   if (previewMode) {
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold">{content.pricing.title}</h2>
-        <p className="text-muted-foreground">{content.pricing.subtitle}</p>
+        <h2 className="text-2xl font-bold">{renderSafeText(content.pricing.title)}</h2>
+        <p className="text-muted-foreground">{renderSafeText(content.pricing.subtitle)}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {content.pricing.plans.map((plan, index) => (
-            <div key={index} className="border border-border rounded-lg p-4">
-              <h3 className="font-semibold">{plan.name}</h3>
-              <div className="text-2xl font-bold text-primary">{plan.price}<span className="text-sm text-muted-foreground">{plan.period}</span></div>
-              <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>
-              <button className="w-full mt-4 py-2 px-4 bg-primary text-primary-foreground rounded-lg">
-                {plan.cta}
-              </button>
-            </div>
-          ))}
+                      {content.pricing.plans.map((plan, index) => (
+              <div key={index} className="border border-border rounded-lg p-4">
+                <h3 className="font-semibold">{renderSafeText(plan.name)}</h3>
+                <div className="text-2xl font-bold text-primary">{renderSafeText(plan.price)}<span className="text-sm text-muted-foreground">{renderSafeText(plan.period)}</span></div>
+                <p className="text-sm text-muted-foreground mt-2">{renderSafeText(plan.description)}</p>
+                <button className="w-full mt-4 py-2 px-4 bg-primary text-primary-foreground rounded-lg">
+                  {renderSafeText(plan.cta)}
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     );
@@ -698,7 +724,7 @@ function FAQEditor({ content, setContent, previewMode }: {
 }) {
   const updateFAQ = (index: number, field: 'question' | 'answer', value: string) => {
     const newFAQ = [...content.faq];
-    newFAQ[index] = { ...newFAQ[index], [field]: value };
+    newFAQ[index] = { ...newFAQ[index], [field]: sanitizeText(value) };
     setContent({ ...content, faq: newFAQ });
   };
 
@@ -721,8 +747,8 @@ function FAQEditor({ content, setContent, previewMode }: {
         <div className="space-y-4">
           {content.faq.map((item, index) => (
             <div key={index} className="border border-border rounded-lg p-4">
-              <h3 className="font-semibold mb-2">{item.question}</h3>
-              <p className="text-muted-foreground">{item.answer}</p>
+              <h3 className="font-semibold mb-2">{renderSafeText(item.question)}</h3>
+              <p className="text-muted-foreground">{renderSafeText(item.answer)}</p>
             </div>
           ))}
         </div>
@@ -794,7 +820,7 @@ function LinksEditor({ content, setContent, previewMode }: {
         ...content.links,
         primary: {
           ...content.links.primary,
-          [key]: value
+          [key]: sanitizeText(value)
         }
       }
     });
@@ -802,7 +828,7 @@ function LinksEditor({ content, setContent, previewMode }: {
 
   const updateFooterLink = (section: 'company' | 'legal', index: number, field: 'name' | 'url', value: string) => {
     const newLinks = [...content.links.footer[section]];
-    newLinks[index] = { ...newLinks[index], [field]: value };
+    newLinks[index] = { ...newLinks[index], [field]: sanitizeText(value) };
     setContent({
       ...content,
       links: {
@@ -947,7 +973,7 @@ function HeroEditor({ content, setContent, previewMode }: {
       ...content,
       hero: {
         ...content.hero,
-        [field]: value
+        [field]: typeof value === 'string' ? sanitizeText(value) : value
       }
     });
   };
@@ -959,7 +985,7 @@ function HeroEditor({ content, setContent, previewMode }: {
         ...content.hero,
         stats: {
           ...content.hero.stats,
-          [key]: value
+          [key]: sanitizeText(value)
         }
       }
     });
@@ -970,7 +996,7 @@ function HeroEditor({ content, setContent, previewMode }: {
       ...content,
       cta: {
         ...content.cta,
-        [field]: value
+        [field]: sanitizeText(value)
       }
     });
   };
@@ -979,8 +1005,8 @@ function HeroEditor({ content, setContent, previewMode }: {
     return (
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-bold">{content.hero.title}</h2>
-          <p className="text-muted-foreground mt-2">{content.hero.subtitle}</p>
+          <h2 className="text-2xl font-bold">{renderSafeText(content.hero.title)}</h2>
+          <p className="text-muted-foreground mt-2">{renderSafeText(content.hero.subtitle)}</p>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -1007,8 +1033,8 @@ function HeroEditor({ content, setContent, previewMode }: {
         </div>
 
         <div className="border-t pt-6">
-          <h3 className="text-lg font-semibold mb-2">{content.cta.title}</h3>
-          <p className="text-muted-foreground">{content.cta.subtitle}</p>
+          <h3 className="text-lg font-semibold mb-2">{renderSafeText(content.cta.title)}</h3>
+          <p className="text-muted-foreground">{renderSafeText(content.cta.subtitle)}</p>
         </div>
       </div>
     );
@@ -1171,7 +1197,7 @@ function StatisticsView({ analytics, loading, onRefresh }: {
         <div className="text-center py-12">
           <BarChart3 className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-muted-foreground">No analytics data available</p>
-          <p className="text-sm text-muted-foreground mt-2">Click "Load Analytics" to fetch data</p>
+          <p className="text-sm text-muted-foreground mt-2">Click &quot;Load Analytics&quot; to fetch data</p>
         </div>
       </div>
     );

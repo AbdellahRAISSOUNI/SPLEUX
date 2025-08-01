@@ -20,7 +20,7 @@ async function loadAnalyticsData(): Promise<StoredAnalyticsEvent[]> {
   try {
     const data = await fs.readFile(ANALYTICS_FILE, 'utf-8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch {
     console.log('Analytics file not found, creating new one');
     return [];
   }

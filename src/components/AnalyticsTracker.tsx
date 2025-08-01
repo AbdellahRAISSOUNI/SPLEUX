@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { trackPageView } from '@/lib/analytics';
+import { trackPageView, trackButtonClick, trackLinkClick, trackFormSubmit, trackSectionView } from '@/lib/analytics';
 
 export function AnalyticsTracker() {
   useEffect(() => {
@@ -14,7 +14,6 @@ export function AnalyticsTracker() {
       if (target.tagName === 'BUTTON' || target.closest('button')) {
         const button = target.tagName === 'BUTTON' ? target : target.closest('button');
         const buttonText = button?.textContent?.trim() || 'Unknown Button';
-        const { trackButtonClick } = require('@/lib/analytics');
         trackButtonClick(buttonText);
       }
 
@@ -22,7 +21,6 @@ export function AnalyticsTracker() {
       if (target.tagName === 'A' || target.closest('a')) {
         const link = target.tagName === 'A' ? target : target.closest('a');
         const linkText = link?.textContent?.trim() || link?.getAttribute('href') || 'Unknown Link';
-        const { trackLinkClick } = require('@/lib/analytics');
         trackLinkClick(linkText);
       }
     };
@@ -31,7 +29,6 @@ export function AnalyticsTracker() {
     const handleSubmit = (event: Event) => {
       const form = event.target as HTMLFormElement;
       const formName = form.getAttribute('name') || form.id || 'Unknown Form';
-      const { trackFormSubmit } = require('@/lib/analytics');
       trackFormSubmit(formName);
     };
 
@@ -42,7 +39,6 @@ export function AnalyticsTracker() {
           const sectionName = entry.target.getAttribute('data-section') || 
                              entry.target.id || 
                              entry.target.className.includes('section') ? 'Section' : 'Unknown Section';
-          const { trackSectionView } = require('@/lib/analytics');
           trackSectionView(sectionName);
         }
       });
