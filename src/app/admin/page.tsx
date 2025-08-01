@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Save, Eye, EyeOff, User, LogOut, Settings, DollarSign, HelpCircle, Link2, Home, Lock, RefreshCw } from 'lucide-react';
+import { Save, Eye, EyeOff, User, LogOut, Settings, DollarSign, HelpCircle, Link2, Home, Lock, RefreshCw, ArrowLeft, Mail, Shield, BarChart3, TrendingUp, MousePointer, Eye as EyeIcon, Calendar } from 'lucide-react';
 import { getContent, type ContentData } from '@/lib/content';
+import { AnalyticsStats } from '@/lib/analytics';
 
 interface AdminUser {
   email: string;
@@ -18,6 +19,8 @@ export default function AdminPage() {
   const [content, setContent] = useState<ContentData>(getContent());
   const [previewMode, setPreviewMode] = useState(false);
   const [contentLoading, setContentLoading] = useState(false);
+  const [analytics, setAnalytics] = useState<AnalyticsStats | null>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
   
   // Login form state
   const [loginForm, setLoginForm] = useState({
@@ -77,14 +80,16 @@ export default function AdminPage() {
         }
       })
       .then(res => res.json())
-      .then(data => {
-        if (data.user) {
-          setUser(data.user);
-        } else {
-          localStorage.removeItem('admin_token');
-        }
-        setLoading(false);
-      })
+             .then(data => {
+         if (data.user) {
+           setUser(data.user);
+           loadFreshContent(); // Load fresh content after login
+           loadAnalytics(); // Load analytics after login
+         } else {
+           localStorage.removeItem('admin_token');
+         }
+         setLoading(false);
+       })
       .catch((error) => {
         console.error('Token verification failed:', error);
         localStorage.removeItem('admin_token');
@@ -116,8 +121,28 @@ export default function AdminPage() {
     } catch (error) {
       console.error('Error loading fresh content:', error);
     }
-    setContentLoading(false);
-  };
+         setContentLoading(false);
+   };
+
+   const loadAnalytics = async () => {
+     setAnalyticsLoading(true);
+     try {
+       const token = localStorage.getItem('admin_token');
+       const response = await fetch('/api/analytics/stats', {
+         headers: { 
+           'Authorization': `Bearer ${token}`,
+           'Cache-Control': 'no-cache' 
+         }
+       });
+       if (response.ok) {
+         const analyticsData = await response.json();
+         setAnalytics(analyticsData);
+       }
+     } catch (error) {
+       console.error('Error loading analytics:', error);
+     }
+     setAnalyticsLoading(false);
+   };
 
   const handleSave = async () => {
     setSaving(true);
@@ -163,134 +188,259 @@ export default function AdminPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="max-w-md w-full mx-auto p-8">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-8 h-8 text-primary" />
-            </div>
-            <h1 className="text-2xl font-bold mb-2">Spleux Admin</h1>
-            <p className="text-muted-foreground">Sign in to manage your website content</p>
-          </div>
-          
-          <form onSubmit={handleLogin} className="space-y-4">
-            {loginForm.error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
-                {loginForm.error}
-              </div>
-            )}
-            
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <input
-                type="email"
-                value={loginForm.email}
-                onChange={(e) => setLoginForm(prev => ({ ...prev, email: e.target.value }))}
-                className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="admin@example.com"
-                required
-                disabled={loginForm.isLoading}
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium mb-2">Password</label>
-              <input
-                type="password"
-                value={loginForm.password}
-                onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
-                className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="••••••••"
-                required
-                disabled={loginForm.isLoading}
-              />
-            </div>
-            
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Modern background with gradient mesh */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              radial-gradient(circle at 25% 25%, rgb(var(--primary) / 0.15) 2px, transparent 2px),
+              radial-gradient(circle at 75% 75%, rgb(var(--primary) / 0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px, 40px 40px',
+            backgroundPosition: '0 0, 30px 30px',
+            animation: 'meshFloat 20s ease-in-out infinite'
+          }} />
+        </div>
+        
+        {/* Ambient glow effects */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-primary/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        
+        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+          <div className="w-full max-w-md">
+            {/* Go back button */}
             <motion.button
-              type="submit"
-              disabled={loginForm.isLoading}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-3 transition-colors disabled:opacity-50"
-              whileHover={{ scale: loginForm.isLoading ? 1 : 1.02 }}
-              whileTap={{ scale: loginForm.isLoading ? 1 : 0.98 }}
+              onClick={() => window.history.back()}
+              className="mb-8 flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors group"
+              whileHover={{ x: -2 }}
             >
-              {loginForm.isLoading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Signing in...</span>
-                </>
-              ) : (
-                <>
-                  <User className="w-5 h-5" />
-                  <span>Sign In</span>
-                </>
-              )}
+              <ArrowLeft className="w-4 h-4 group-hover:translate-x-[-2px] transition-transform" />
+              <span className="text-sm">Back to website</span>
             </motion.button>
-          </form>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 shadow-2xl"
+            >
+              {/* Header with logo styling */}
+              <div className="text-center mb-8">
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="relative w-20 h-20 mx-auto mb-6"
+                >
+                  <div className="w-full h-full bg-gradient-to-br from-primary via-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/25">
+                    <Shield className="w-10 h-10 text-primary-foreground" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl" />
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                  <h1 className="text-3xl font-display font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-2">
+                    Spleux Admin
+                  </h1>
+                  <p className="text-muted-foreground">Secure content management portal</p>
+                </motion.div>
+              </div>
+              
+              <motion.form
+                onSubmit={handleLogin}
+                className="space-y-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                {loginForm.error && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl text-sm flex items-center space-x-2"
+                  >
+                    <div className="w-2 h-2 bg-red-500 rounded-full" />
+                    <span>{loginForm.error}</span>
+                  </motion.div>
+                )}
+                
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-3 text-foreground">Email Address</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                      <input
+                        type="email"
+                        value={loginForm.email}
+                        onChange={(e) => setLoginForm(prev => ({ ...prev, email: e.target.value }))}
+                        className="w-full pl-11 pr-4 py-3 border border-border rounded-xl bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+                        placeholder="admin@spleux.com"
+                        required
+                        disabled={loginForm.isLoading}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-3 text-foreground">Password</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                      <input
+                        type="password"
+                        value={loginForm.password}
+                        onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
+                        className="w-full pl-11 pr-4 py-3 border border-border rounded-xl bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+                        placeholder="••••••••"
+                        required
+                        disabled={loginForm.isLoading}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                <motion.button
+                  type="submit"
+                  disabled={loginForm.isLoading}
+                  className="w-full bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground font-semibold py-4 px-6 rounded-xl flex items-center justify-center space-x-3 transition-all disabled:opacity-50 shadow-lg shadow-primary/25"
+                  whileHover={{ scale: loginForm.isLoading ? 1 : 1.02, y: loginForm.isLoading ? 0 : -1 }}
+                  whileTap={{ scale: loginForm.isLoading ? 1 : 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  {loginForm.isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Authenticating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Shield className="w-5 h-5" />
+                      <span>Access Dashboard</span>
+                    </>
+                  )}
+                </motion.button>
+              </motion.form>
+              
+              {/* Security indicator */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="mt-6 flex items-center justify-center space-x-2 text-xs text-muted-foreground"
+              >
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span>Secure encrypted connection</span>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     );
   }
 
-  const tabs = [
-    { id: 'pricing', label: 'Pricing', icon: DollarSign },
-    { id: 'faq', label: 'FAQ', icon: HelpCircle },
-    { id: 'links', label: 'Links', icon: Link2 },
-    { id: 'hero', label: 'Hero', icon: Home },
-  ];
+     const tabs = [
+     { id: 'statistics', label: 'Statistics', icon: BarChart3 },
+     { id: 'hero', label: 'Hero', icon: Home },
+     { id: 'pricing', label: 'Pricing', icon: DollarSign },
+     { id: 'faq', label: 'FAQ', icon: HelpCircle },
+     { id: 'links', label: 'Links', icon: Link2 },
+   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-primary/5">
+      {/* Modern gradient background */}
+      <div className="fixed inset-0 opacity-30 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgb(var(--primary) / 0.1) 2px, transparent 2px),
+            radial-gradient(circle at 75% 75%, rgb(var(--primary) / 0.05) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px, 40px 40px',
+          backgroundPosition: '0 0, 30px 30px',
+          animation: 'meshFloat 20s ease-in-out infinite'
+        }} />
+      </div>
+
       {/* Header */}
-      <header className="border-b border-border bg-card/50 sticky top-0 z-50 backdrop-blur-sm">
+      <header className="border-b border-border/50 bg-card/80 sticky top-0 z-50 backdrop-blur-xl shadow-sm">
         <div className="container-responsive py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-                <Settings className="w-5 h-5 text-primary" />
+              <div className="relative w-12 h-12">
+                <div className="w-full h-full bg-gradient-to-br from-primary via-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg shadow-primary/25">
+                  <Settings className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl" />
               </div>
               <div>
-                <h1 className="font-semibold">Spleux Admin</h1>
-                <p className="text-sm text-muted-foreground">Content Management</p>
+                <h1 className="text-lg font-display font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">Spleux Admin</h1>
+                <p className="text-sm text-muted-foreground">Content Management Portal</p>
               </div>
             </div>
             
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setPreviewMode(!previewMode)}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-border hover:bg-accent transition-colors"
-              >
-                {previewMode ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                <span className="text-sm">{previewMode ? 'Edit' : 'Preview'}</span>
-              </button>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* Mobile responsive buttons */}
+              <div className="hidden sm:flex items-center space-x-2">
+                <button
+                  onClick={() => setPreviewMode(!previewMode)}
+                  className="flex items-center space-x-2 px-3 py-2 rounded-xl border border-border/50 hover:bg-accent/50 transition-all backdrop-blur-sm"
+                >
+                  {previewMode ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  <span className="text-sm hidden lg:inline">{previewMode ? 'Edit' : 'Preview'}</span>
+                </button>
+                
+                <button
+                  onClick={loadFreshContent}
+                  disabled={contentLoading}
+                  className="flex items-center space-x-2 px-3 py-2 rounded-xl border border-border/50 hover:bg-accent/50 transition-all disabled:opacity-50 backdrop-blur-sm"
+                >
+                  <RefreshCw className={`w-4 h-4 ${contentLoading ? 'animate-spin' : ''}`} />
+                  <span className="text-sm hidden lg:inline">{contentLoading ? 'Refreshing...' : 'Refresh'}</span>
+                </button>
+              </div>
               
-              <button
-                onClick={loadFreshContent}
-                disabled={contentLoading}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg border border-border hover:bg-accent transition-colors disabled:opacity-50"
-              >
-                <RefreshCw className={`w-4 h-4 ${contentLoading ? 'animate-spin' : ''}`} />
-                <span className="text-sm">{contentLoading ? 'Refreshing...' : 'Refresh'}</span>
-              </button>
+              {/* Mobile buttons */}
+              <div className="flex sm:hidden space-x-1">
+                <button
+                  onClick={() => setPreviewMode(!previewMode)}
+                  className="p-2 rounded-xl border border-border/50 hover:bg-accent/50 transition-all"
+                >
+                  {previewMode ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={loadFreshContent}
+                  disabled={contentLoading}
+                  className="p-2 rounded-xl border border-border/50 hover:bg-accent/50 transition-all disabled:opacity-50"
+                >
+                  <RefreshCw className={`w-4 h-4 ${contentLoading ? 'animate-spin' : ''}`} />
+                </button>
+              </div>
               
               <motion.button
                 onClick={handleSave}
                 disabled={saving}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold flex items-center space-x-2 disabled:opacity-50"
-                whileHover={{ scale: 1.02 }}
+                className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-4 py-2 rounded-xl font-semibold flex items-center space-x-2 disabled:opacity-50 shadow-lg shadow-primary/25"
+                whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <Save className="w-4 h-4" />
-                <span>{saving ? 'Saving...' : 'Save Changes'}</span>
+                <span className="hidden sm:inline">{saving ? 'Saving...' : 'Save Changes'}</span>
+                <span className="sm:hidden">{saving ? '...' : 'Save'}</span>
               </motion.button>
               
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl flex items-center justify-center border border-primary/20">
                   <User className="w-4 h-4 text-primary" />
                 </div>
-                <span className="text-sm font-medium">{user.name}</span>
+                <span className="text-sm font-medium hidden md:inline">{user.name}</span>
                 <button
                   onClick={handleLogout}
-                  className="text-muted-foreground hover:text-foreground p-2 rounded-lg hover:bg-accent transition-colors"
+                  className="text-muted-foreground hover:text-foreground p-2 rounded-xl hover:bg-accent/50 transition-all"
+                  title="Logout"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -300,47 +450,96 @@ export default function AdminPage() {
         </div>
       </header>
 
-      <div className="container-responsive py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="container-responsive py-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
-                      activeTab === tab.id
-                        ? 'bg-primary text-primary-foreground'
-                        : 'hover:bg-accent'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span className="font-medium">{tab.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
+            <div className="lg:sticky lg:top-24">
+                             {/* Mobile tabs */}
+               <div className="lg:hidden mb-6">
+                 <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-2 shadow-lg">
+                   <div className="grid grid-cols-5 gap-1">
+                    {tabs.map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveTab(tab.id)}
+                          className={`flex flex-col items-center space-y-1 px-3 py-3 rounded-xl text-center transition-all ${
+                            activeTab === tab.id
+                              ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25'
+                              : 'hover:bg-accent/50'
+                          }`}
+                        >
+                          <Icon className="w-5 h-5" />
+                          <span className="text-xs font-medium">{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Desktop sidebar */}
+              <nav className="hidden lg:block space-y-2">
+                <div className="mb-6">
+                  <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider px-3">Content Sections</h2>
+                </div>
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <motion.button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all group ${
+                        activeTab === tab.id
+                          ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25'
+                          : 'hover:bg-accent/50 border border-transparent hover:border-border/50'
+                      }`}
+                      whileHover={{ scale: 1.01, x: 2 }}
+                      whileTap={{ scale: 0.99 }}
+                    >
+                      <Icon className={`w-5 h-5 ${activeTab === tab.id ? '' : 'group-hover:text-primary'}`} />
+                      <span className="font-medium">{tab.label}</span>
+                      {activeTab === tab.id && (
+                        <motion.div
+                          layoutId="activeTab"
+                          className="ml-auto w-2 h-2 bg-primary-foreground rounded-full"
+                          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        />
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </nav>
+            </div>
           </div>
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-card rounded-lg border border-border p-6">
-              {activeTab === 'pricing' && (
-                <PricingEditor content={content} setContent={setContent} previewMode={previewMode} />
-              )}
-              {activeTab === 'faq' && (
-                <FAQEditor content={content} setContent={setContent} previewMode={previewMode} />
-              )}
-              {activeTab === 'links' && (
-                <LinksEditor content={content} setContent={setContent} previewMode={previewMode} />
-              )}
-              {activeTab === 'hero' && (
-                <HeroEditor content={content} setContent={setContent} previewMode={previewMode} />
-              )}
-            </div>
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+                             className="bg-card/80 backdrop-blur-xl rounded-2xl border border-border/50 p-6 lg:p-8 shadow-xl"
+             >
+               {activeTab === 'statistics' && (
+                 <StatisticsView analytics={analytics} loading={analyticsLoading} onRefresh={loadAnalytics} />
+               )}
+               {activeTab === 'hero' && (
+                 <HeroEditor content={content} setContent={setContent} previewMode={previewMode} />
+               )}
+               {activeTab === 'pricing' && (
+                 <PricingEditor content={content} setContent={setContent} previewMode={previewMode} />
+               )}
+               {activeTab === 'faq' && (
+                 <FAQEditor content={content} setContent={setContent} previewMode={previewMode} />
+               )}
+               {activeTab === 'links' && (
+                 <LinksEditor content={content} setContent={setContent} previewMode={previewMode} />
+               )}
+             </motion.div>
           </div>
         </div>
       </div>
@@ -925,6 +1124,278 @@ function HeroEditor({ content, setContent, previewMode }: {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Statistics View Component
+function StatisticsView({ analytics, loading, onRefresh }: {
+  analytics: AnalyticsStats | null;
+  loading: boolean;
+  onRefresh: () => void;
+}) {
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Website Analytics</h2>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="bg-accent/20 rounded-xl p-4 animate-pulse">
+              <div className="h-4 bg-accent rounded mb-2"></div>
+              <div className="h-8 bg-accent rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (!analytics) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Website Analytics</h2>
+          <motion.button
+            onClick={onRefresh}
+            className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl font-medium"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <RefreshCw className="w-4 h-4" />
+            <span>Load Analytics</span>
+          </motion.button>
+        </div>
+        <div className="text-center py-12">
+          <BarChart3 className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <p className="text-muted-foreground">No analytics data available</p>
+          <p className="text-sm text-muted-foreground mt-2">Click "Load Analytics" to fetch data</p>
+        </div>
+      </div>
+    );
+  }
+
+  const StatCard = ({ title, value, icon: Icon, trend, subtitle }: {
+    title: string;
+    value: string | number;
+    icon: React.ElementType;
+    trend?: string;
+    subtitle?: string;
+  }) => (
+    <motion.div
+      className="bg-gradient-to-br from-card to-card/80 rounded-xl p-4 lg:p-6 border border-border/50 shadow-sm"
+      whileHover={{ scale: 1.02, y: -2 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+          <Icon className="w-5 h-5 text-primary" />
+        </div>
+        {trend && (
+          <span className="text-xs text-green-600 bg-green-100 dark:bg-green-900/20 px-2 py-1 rounded-full">
+            {trend}
+          </span>
+        )}
+      </div>
+      <div className="space-y-1">
+        <p className="text-2xl lg:text-3xl font-bold">{value.toLocaleString()}</p>
+        <p className="text-sm text-muted-foreground">{title}</p>
+        {subtitle && <p className="text-xs text-muted-foreground/70">{subtitle}</p>}
+      </div>
+    </motion.div>
+  );
+
+  const TopItemsList = ({ title, items, icon: Icon }: {
+    title: string;
+    items: { [key: string]: number };
+    icon: React.ElementType;
+  }) => {
+    const sortedItems = Object.entries(items)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 5);
+
+    return (
+      <div className="bg-gradient-to-br from-card to-card/80 rounded-xl p-4 lg:p-6 border border-border/50 shadow-sm">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+            <Icon className="w-4 h-4 text-primary" />
+          </div>
+          <h3 className="font-semibold">{title}</h3>
+        </div>
+        <div className="space-y-3">
+          {sortedItems.length > 0 ? sortedItems.map(([item, count], index) => (
+            <div key={item} className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
+                  index === 0 ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400' :
+                  index === 1 ? 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400' :
+                  index === 2 ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400' :
+                  'bg-muted text-muted-foreground'
+                }`}>
+                  {index + 1}
+                </div>
+                <span className="text-sm font-medium truncate max-w-[150px] lg:max-w-[200px]" title={item}>
+                  {item}
+                </span>
+              </div>
+              <span className="text-sm font-semibold text-primary">{count}</span>
+            </div>
+          )) : (
+            <p className="text-sm text-muted-foreground">No data available</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">Website Analytics</h2>
+          <p className="text-sm text-muted-foreground">
+            Last updated: {new Date(analytics.lastUpdated).toLocaleString()}
+          </p>
+        </div>
+        <motion.button
+          onClick={onRefresh}
+          disabled={loading}
+          className="flex items-center space-x-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl font-medium disabled:opacity-50"
+          whileHover={{ scale: loading ? 1 : 1.02 }}
+          whileTap={{ scale: loading ? 1 : 0.98 }}
+        >
+          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          <span>Refresh</span>
+        </motion.button>
+      </div>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          title="Total Page Views"
+          value={analytics.pageViews.total}
+          icon={EyeIcon}
+          subtitle="All time"
+        />
+        <StatCard
+          title="Unique Visitors"
+          value={analytics.visitors.total}
+          icon={User}
+          subtitle="All time"
+        />
+        <StatCard
+          title="Button Clicks"
+          value={analytics.buttonClicks.total}
+          icon={MousePointer}
+          subtitle="All time"
+        />
+        <StatCard
+          title="Today's Views"
+          value={analytics.pageViews.today}
+          icon={Calendar}
+          trend={analytics.pageViews.today > 0 ? '+' + analytics.pageViews.today : '0'}
+        />
+      </div>
+
+      {/* Period Statistics */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-gradient-to-br from-card to-card/80 rounded-xl p-4 lg:p-6 border border-border/50 shadow-sm">
+          <h3 className="font-semibold mb-4 flex items-center space-x-2">
+            <TrendingUp className="w-4 h-4 text-primary" />
+            <span>Page Views</span>
+          </h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Today</span>
+              <span className="font-semibold">{analytics.pageViews.today}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">This Week</span>
+              <span className="font-semibold">{analytics.pageViews.thisWeek}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">This Month</span>
+              <span className="font-semibold">{analytics.pageViews.thisMonth}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-card to-card/80 rounded-xl p-4 lg:p-6 border border-border/50 shadow-sm">
+          <h3 className="font-semibold mb-4 flex items-center space-x-2">
+            <User className="w-4 h-4 text-primary" />
+            <span>Visitors</span>
+          </h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Today</span>
+              <span className="font-semibold">{analytics.visitors.today}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">This Week</span>
+              <span className="font-semibold">{analytics.visitors.thisWeek}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">This Month</span>
+              <span className="font-semibold">{analytics.visitors.thisMonth}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-card to-card/80 rounded-xl p-4 lg:p-6 border border-border/50 shadow-sm">
+          <h3 className="font-semibold mb-4 flex items-center space-x-2">
+            <Settings className="w-4 h-4 text-primary" />
+            <span>Device Stats</span>
+          </h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Desktop</span>
+              <span className="font-semibold">{analytics.deviceStats.desktop}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Mobile</span>
+              <span className="font-semibold">{analytics.deviceStats.mobile}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-sm text-muted-foreground">Tablet</span>
+              <span className="font-semibold">{analytics.deviceStats.tablet}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Top Lists */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TopItemsList
+          title="Most Visited Pages"
+          items={analytics.pageViews.pages}
+          icon={EyeIcon}
+        />
+        <TopItemsList
+          title="Most Clicked Buttons"
+          items={analytics.buttonClicks.buttons}
+          icon={MousePointer}
+        />
+      </div>
+
+      {/* Additional Stats */}
+      {Object.keys(analytics.linkClicks.links).length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TopItemsList
+            title="Most Clicked Links"
+            items={analytics.linkClicks.links}
+            icon={Link2}
+          />
+          {Object.keys(analytics.topReferrers).length > 0 && (
+            <TopItemsList
+              title="Top Referrers"
+              items={analytics.topReferrers}
+              icon={TrendingUp}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

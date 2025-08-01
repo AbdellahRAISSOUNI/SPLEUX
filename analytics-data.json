@@ -1,0 +1,134 @@
+[
+  {
+    "type": "page_view",
+    "data": {
+      "page": "/",
+      "timestamp": 1754070687619,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "17540706885490uodb1wmz",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070689278,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070689395i8ze57zc2",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Unknown Section",
+      "timestamp": 1754070689279,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070689412n9j5accuy",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070709875,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070710382pnjgtr4pc",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070709876,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070710433c7531wxq7",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070709912,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070710492ehsesx9d2",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070709913,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070710528l4cc1usml",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070709956,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070710569kp6wp7u00",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "section_view",
+    "data": {
+      "sectionName": "Section",
+      "timestamp": 1754070709956,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070710599dqfn93a2k",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "page_view",
+    "data": {
+      "page": "/",
+      "timestamp": 1754070719139,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070719329y4ck9cgrj",
+    "deviceType": "desktop"
+  },
+  {
+    "type": "page_view",
+    "data": {
+      "page": "/",
+      "timestamp": 1754070724756,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko/20100101 Firefox/141.0",
+      "referrer": "",
+      "pathname": "/"
+    },
+    "id": "1754070724991e3mgjohn4",
+    "deviceType": "desktop"
+  }
+]

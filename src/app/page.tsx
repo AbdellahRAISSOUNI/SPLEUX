@@ -11,10 +11,12 @@ import {
   CTASection,
   Footer
 } from '@/sections';
+import { AnalyticsTracker } from '@/components/AnalyticsTracker';
 
 export default function Home() {
   return (
     <>
+      <AnalyticsTracker />
       {/* Structured Data for the main page */}
       <script
         type="application/ld+json"
@@ -60,12 +62,12 @@ export default function Home() {
       <div className="min-h-screen bg-background">
         <Navigation />
         <main>
-          <HeroSection />
-          <FeaturesSection />
-          <PricingSection />
-          <TestimonialsSection />
-          <FAQSection />
-          <CTASection />
+          <section data-section="Hero"><HeroSection /></section>
+          <section data-section="Features"><FeaturesSection /></section>
+          <section data-section="Pricing"><PricingSection /></section>
+          <section data-section="Testimonials"><TestimonialsSection /></section>
+          <section data-section="FAQ"><FAQSection /></section>
+          <section data-section="CTA"><CTASection /></section>
         </main>
         <Footer />
       </div>

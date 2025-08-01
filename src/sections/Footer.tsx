@@ -79,20 +79,31 @@ export default function Footer() {
         
         <div className="border-t border-border/20 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-            <p className="text-muted-foreground/70 text-sm">
-              © 2025 Spleux Trading Services. All rights reserved.
-            </p>
+                          <p className="text-muted-foreground/70 text-sm">
+                © {new Date().getFullYear()} Spleux Trading Services. All rights reserved.
+              </p>
             
             {/* Minimal made by section */}
-            <div className="flex items-center space-x-1 text-muted-foreground/50 text-xs">
-              <span>Made by</span>
+            <div className="flex items-center space-x-4 text-muted-foreground/50 text-xs">
+              <div className="flex items-center space-x-1">
+                <span>Made by</span>
+                <a
+                  href="https://abdellah-raissouni-2025.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-muted-foreground/80 transition-colors duration-200"
+                >
+                  Abdellah Raissouni
+                </a>
+              </div>
+              
+              {/* Admin link - subtle but visible */}
               <a
-                href="https://abdellah-raissouni-2025.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-muted-foreground/80 transition-colors duration-200"
+                href="/admin"
+                className="opacity-50 hover:opacity-90 transition-all duration-300 text-xs px-2 py-1 rounded-md hover:bg-muted-foreground/10 border border-transparent hover:border-border/30"
+                title="Admin Portal"
               >
-                Abdellah Raissouni
+                ⚙
               </a>
             </div>
           </div>
